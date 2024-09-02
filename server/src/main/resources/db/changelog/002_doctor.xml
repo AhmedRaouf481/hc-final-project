@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="001-01" author="omar">
+        <createTable tableName="doctor">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="bigint"/>
+            <column name="specialization_id" type="bigint"/>
+            <column name="years_of_experience" type="int"/>
+            <column name="salary" type="double"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="doctor" baseColumnNames="user_id"
+                referencedTableName="user" referencedColumnNames="user_id"
+                constraintName="fk_user_doctor"/>
+
+        <addForeignKeyConstraint
+                baseTableName="doctor" baseColumnNames="specialization_id"
+                referencedTableName="specialization" referencedColumnNames="specialization_id" constraintName="fk_spec_doc"/>
+    </changeSet>
+
+</databaseChangeLog>
