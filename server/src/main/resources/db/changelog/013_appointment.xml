@@ -34,7 +34,7 @@
             baseTableName="appointments" baseColumnNames="doctor_id"
             referencedTableName="doctors" referencedColumnNames="id" />
         <addForeignKeyConstraint constraintName="fk_appointment_clinic"
-            baseTableName="appointments" baseColumnNames="appointment_id"
+            baseTableName="appointments" baseColumnNames="clinic_id"
             referencedTableName="clinics" referencedColumnNames="id" />
         <addForeignKeyConstraint constraintName="fk_appointment_status"
             baseTableName="appointments" baseColumnNames="status_id"
