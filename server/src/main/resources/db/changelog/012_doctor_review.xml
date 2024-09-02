@@ -33,4 +33,8 @@
 
         <addForeignKeyConstraint
                 baseTableName="doctor_review" baseColumnNames="doctor_id"
-                referencedTable
+                referencedTableName="doctor" referencedColumnNames="id"
+                constraintName="fk_doctor_review_doctor"/>
+    </changeSet>
+
+</databaseChangeLog>
