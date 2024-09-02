@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+<changeSet  id="003-01"  author="moaz">
+    <createTable tableName="notifications">
+        <column name="id" type="int(11)" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false" />
+        </column>
+        <column name="user_id" type="int(11)">
+            <constraints nullable="false" />
+        </column>
+        <column name="notification_type_id" type="int(11)">
+            <constraints nullable="false" />
+        </column>
+        <column name="message" type="varchar(255)">
+            <constraints nullable="false" />
+        </column>
+        <column name="sent_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+            <constraints nullable="false"/>
+        </column>
+        <column name="read_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="notifications"
+                             baseColumnNames="user_id"
+                             constraintName="fk_notifications_user"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint baseTableName="notifications"
+                             baseColumnNames="notification_type_id"
+                             constraintName="fk_notifications_notification_type"
+                             referencedTableName="notification_type"
+                             referencedColumnNames="id"/>
+</changeSet>
+</databaseChangeLog>
