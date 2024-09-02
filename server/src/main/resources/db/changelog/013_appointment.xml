@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="013-1" author="araouf">
-        <createTable tableName="appointment">
+        <createTable tableName="appointments">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
@@ -38,6 +38,6 @@
             referencedTableName="clinics" referencedColumnNames="id" />
         <addForeignKeyConstraint constraintName="fk_appointment_status"
             baseTableName="appointments" baseColumnNames="status_id"
-            referencedTableName="status" referencedColumnNames="id" />
+            referencedTableName="appointment_status" referencedColumnNames="id" />
     </changeSet>
 </databaseChangeLog>

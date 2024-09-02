@@ -9,21 +9,28 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  id="006-01"  author="omaraalsaied">
-        <createTable tableName="admins">
+    <changeSet  id="008-01"  author="omaraalsaied">
+        <createTable tableName="specializations">
             <column name="id" type="int(11)" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" />
             </column>
-            <column name="user_id" type="int(11)">
-                <constraints nullable="false" />
-            </column>
-            <column name="salary" type="double">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="admins" baseColumnNames="user_id" constraintName="admin_user_id" referencedTableName="users"
-                                 referencedColumnNames="id" />
+        <insert tableName="specializations">
+            <column name="name" value="surgery"/>
+        </insert>
+
+        <insert tableName="specializations">
+            <column name="name" value="Dermatology" />
+        </insert>
+
+        <insert tableName="specializations">
+            <column name="name" value="Pediatrics" />
+        </insert>
+
     </changeSet>
 
 </databaseChangeLog>

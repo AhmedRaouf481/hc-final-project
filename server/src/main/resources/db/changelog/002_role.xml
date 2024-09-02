@@ -9,28 +9,33 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  id="008-01"  author="omaraalsaied">
-        <createTable tableName="specializations">
+    <changeSet  id="003-01"  author="moaz">
+        <createTable tableName="roles">
             <column name="id" type="int(11)" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" />
+                <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
         </createTable>
+    </changeSet>
 
-        <insert tableName="specializations">
-            <column name="name" value="surgery"/>
+    <changeSet id="003-2" author="moaz">
+        <insert tableName="roles">
+            <column name="name" value="admin"/>
         </insert>
+    </changeSet>
 
-        <insert tableName="specializations">
-            <column name="name" value="Dermatology" />
+    <changeSet id="003-3" author="moaz">
+        <insert tableName="roles">
+            <column name="name" value="doctor"/>
         </insert>
+    </changeSet>
 
-        <insert tableName="specializations">
-            <column name="name" type="Pediatrics" />
+    <changeSet id="003-4" author="moaz">
+        <insert tableName="roles">
+            <column name="name" value="patient"/>
         </insert>
-
     </changeSet>
 
 </databaseChangeLog>

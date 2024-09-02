@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -18,17 +19,15 @@
             <column name="dosage" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="instructions" type="varchar(500)">
-                <constraints nullable="true"/>
-            </column>
+            <column name="instructions" type="varchar(500)" />
             <column name="issued_at" type="timestamp">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="prescription" baseColumnNames="record_id"
-                referencedTableName="medical_record" referencedColumnNames="record_id"
+                baseTableName="prescriptions" baseColumnNames="record_id"
+                referencedTableName="medical_records" referencedColumnNames="id"
                 constraintName="fk_prescription_record"/>
     </changeSet>
 

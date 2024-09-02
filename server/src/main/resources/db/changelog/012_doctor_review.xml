@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -27,13 +28,13 @@
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="doctor_review" baseColumnNames="patient_id"
-                referencedTableName="patient" referencedColumnNames="id"
+                baseTableName="doctor_reviews" baseColumnNames="patient_id"
+                referencedTableName="patients" referencedColumnNames="id"
                 constraintName="fk_doctor_review_patient"/>
 
         <addForeignKeyConstraint
-                baseTableName="doctor_review" baseColumnNames="doctor_id"
-                referencedTableName="doctor" referencedColumnNames="id"
+                baseTableName="doctor_reviews" baseColumnNames="doctor_id"
+                referencedTableName="doctors" referencedColumnNames="id"
                 constraintName="fk_doctor_review_doctor"/>
     </changeSet>
 
