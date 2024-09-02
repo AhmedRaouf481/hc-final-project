@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="008-01" author="omar">
+        <createTable tableName="doctor_schedules">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="doctor_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="clinic_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="time">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_time" type="time">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="doctor_schedule" baseColumnNames="doctor_id"
+                referencedTableName="doctor" referencedColumnNames="id"
+                constraintName="fk_doctor_schedule_doctor"/>
+
+        <addForeignKeyConstraint
+                baseTableName="doctor_schedule" baseColumnNames="clinic_id"
+                referencedTableName="clinic" referencedColumnNames="id"
+                constraintName="fk_doctor_schedule_clinic"/>
+    </changeSet>
+
+</databaseChangeLog>

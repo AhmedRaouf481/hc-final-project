@@ -1,0 +1,35 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="009-01" author="omar">
+        <createTable tableName="prescriptions">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="record_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="medication" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dosage" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="instructions" type="varchar(500)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="issued_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="prescription" baseColumnNames="record_id"
+                referencedTableName="medical_record" referencedColumnNames="record_id"
+                constraintName="fk_prescription_record"/>
+    </changeSet>
+
+</databaseChangeLog>
