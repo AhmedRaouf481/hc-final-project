@@ -5,35 +5,32 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="008-01" author="omar">
-        <createTable tableName="doctor_schedules">
-            <column name="id" type="bigint" autoIncrement="true">
+    <changeSet id="018-01" author="araouf">
+        <createTable tableName="doctor_slots">
+            <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="doctor_id" type="bigint">
+            <column name="doctor_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="clinic_id" type="bigint">
+            <column name="clinic_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="date" type="date">
+            <column name="start_time" type="datetime">
                 <constraints nullable="false"/>
             </column>
-            <column name="start_time" type="time">
-                <constraints nullable="false"/>
-            </column>
-            <column name="end_time" type="time">
+            <column name="end_time" type="datetime">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="doctor_schedules" baseColumnNames="doctor_id"
+                baseTableName="doctor_slots" baseColumnNames="doctor_id"
                 referencedTableName="doctors" referencedColumnNames="id"
                 constraintName="fk_doctor_schedule_doctor"/>
 
         <addForeignKeyConstraint
-                baseTableName="doctor_schedules" baseColumnNames="clinic_id"
+                baseTableName="doctor_slots" baseColumnNames="clinic_id"
                 referencedTableName="clinics" referencedColumnNames="id"
                 constraintName="fk_doctor_schedule_clinic"/>
     </changeSet>
