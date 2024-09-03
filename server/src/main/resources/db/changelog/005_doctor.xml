@@ -4,13 +4,13 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="001-01" author="omar">
+    <changeSet id="005-01" author="omar">
         <createTable tableName="doctors">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="user_id" type="bigint"/>
-            <column name="specialization_id" type="bigint"/>
+            <column name="user_id" type="int"/>
+            <column name="specialization_id" type="int"/>
             <column name="years_of_experience" type="int"/>
             <column name="salary" type="decimal(10,2)" />
         </createTable>

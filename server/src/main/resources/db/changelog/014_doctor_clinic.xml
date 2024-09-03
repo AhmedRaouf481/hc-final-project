@@ -5,15 +5,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="010-01" author="omar">
+    <changeSet id="014-01" author="omar">
         <createTable tableName="doctor_clinics">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="doctor_id" type="bigint">
+            <column name="doctor_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="clinic_id" type="bigint">
+            <column name="clinic_id" type="int">
                 <constraints nullable="false"/>
             </column>
         </createTable>

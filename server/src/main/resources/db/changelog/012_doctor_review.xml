@@ -7,13 +7,13 @@
 
     <changeSet id="012-01" author="omar">
         <createTable tableName="doctor_reviews">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="patient_id" type="bigint">
+            <column name="patient_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="doctor_id" type="bigint">
+            <column name="doctor_id" type="int">
                 <constraints nullable="false"/>
             </column>
             <column name="rating" type="int">
