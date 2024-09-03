@@ -1,6 +1,7 @@
 package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.Patient;
+import com.clinicare.server.exception.ValidationException;
 import com.clinicare.server.repository.PatientRepository;
 import com.clinicare.server.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +16,48 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-
+    @Override
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
     }
 
-
+    @Override
     public Optional<Patient> getPatientById(Long id) {
+        validatePatientId(id);
         return patientRepository.findById(id);
     }
 
+    @Override
     public Patient savePatient(Patient patient) {
+        validatePatientEmail(patient.getEmail());
         return patientRepository.save(patient);
     }
 
+    @Override
     public void deletePatient(Long id) {
+        validatePatientId(id);
         patientRepository.deleteById(id);
     }
 
+    @Override
     public Patient findPatientByEmail(String email) {
+        validatePatientEmail(email);
         return patientRepository.findByEmail(email);
+    }
+
+    // Validation methods
+    private void validatePatientId(Long id) {
+        if (id == null || id <= 0) {
+            throw new ValidationException("Invalid Patient ID: " + id);
+        }
+    }
+
+    private void validatePatientEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new ValidationException("Patient email cannot be null or empty");
+        }
+        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            throw new ValidationException("Invalid email format: " + email);
+        }
     }
 }
