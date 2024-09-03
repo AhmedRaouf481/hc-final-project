@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="012-01" author="omar">
+        <createTable tableName="doctor_reviews">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="patient_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="doctor_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comments" type="varchar(500)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="doctor_reviews" baseColumnNames="patient_id"
+                referencedTableName="patients" referencedColumnNames="id"
+                constraintName="fk_doctor_review_patient"/>
+
+        <addForeignKeyConstraint
+                baseTableName="doctor_reviews" baseColumnNames="doctor_id"
+                referencedTableName="doctors" referencedColumnNames="id"
+                constraintName="fk_doctor_review_doctor"/>
+    </changeSet>
+
+</databaseChangeLog>

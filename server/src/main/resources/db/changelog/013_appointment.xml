@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="013-1" author="araouf">
+        <createTable tableName="appointments">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="diagnosis" type="varchar(255)" />
+            <column name="treatment" type="varchar(255)" />
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="patient_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="doctor_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="clinic_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="status_id" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_appointment_patient"
+            baseTableName="appointments" baseColumnNames="patient_id"
+            referencedTableName="patients" referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_appointment_doctor"
+            baseTableName="appointments" baseColumnNames="doctor_id"
+            referencedTableName="doctors" referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_appointment_clinic"
+            baseTableName="appointments" baseColumnNames="clinic_id"
+            referencedTableName="clinics" referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_appointment_status"
+            baseTableName="appointments" baseColumnNames="status_id"
+            referencedTableName="appointment_status" referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>

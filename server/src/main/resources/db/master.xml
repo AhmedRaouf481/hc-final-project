@@ -1,7 +1,26 @@
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include file="db/changelog/001_user.xml" />
+    <include file="db/changelog/001_user.xml"/>
+    <include file="db/changelog/002_role.xml"/>
+    <include file="db/changelog/003_user_role.xml"/>
+    <include file="db/changelog/004_admins.xml"/>
+    <include file="db/changelog/005_doctor.xml"/>
+    <include file="db/changelog/011_specializations.xml"/>
+    <include file="db/changelog/006_patients.xml"/>
+    <include file="db/changelog/007_notification_type.xml"/>
+    <include file="db/changelog/008_appointment_type.xml"/>
+    <include file="db/changelog/009_appointment_status.xml"/>
+    <include file="db/changelog/010_notification.xml"/>
+    <include file="db/changelog/012_doctor_review.xml"/>
+    <include file="db/changelog/016_location.xml"/>
+    <include file="db/changelog/017_clinic.xml"/>
+    <include file="db/changelog/014_doctor_clinic.xml"/>
+    <include file="db/changelog/013_appointment.xml"/>
+    <include file="db/changelog/015_invoice.xml"/>
+    <include file="db/changelog/018_doctor_slots.xml"/>
+    <include file="db/changelog/019_medical_record.xml"/>
+    <include file="db/changelog/020_prescription.xml"/>
 </databaseChangeLog>

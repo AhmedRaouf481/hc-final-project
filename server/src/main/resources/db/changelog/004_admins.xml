@@ -9,35 +9,21 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  id="001-01"  author="omaraalsaied">
-        <createTable tableName="users">
+    <changeSet  id="004-01"  author="omaraalsaied">
+        <createTable tableName="admins">
             <column name="id" type="int(11)" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" />
             </column>
-            <column name="username" type="varchar(255)">
+            <column name="user_id" type="int(11)">
                 <constraints nullable="false" />
             </column>
-            <column name="password" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="email" type="varchar(255)">
+            <column name="salary" type="decimal(10,2)">
                 <constraints nullable="false" />
             </column>
-            <column name="phone" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_at" type="TIMESTAMP" />
         </createTable>
+
+        <addForeignKeyConstraint baseTableName="admins" baseColumnNames="user_id" constraintName="admin_user_id" referencedTableName="users"
+                                 referencedColumnNames="id" />
     </changeSet>
-    <changeSet id="002-01" author="omaraalsaied">
-        <insert tableName="users">
-            <column name="username" value="omaraalsaied"/>
-            <column name="email" value="omar@email.com" />
-            <column name="password" value="Pas$word" />
-            <column name="phone" value="+201553216735" />
-        </insert>
-    </changeSet>
+
 </databaseChangeLog>
