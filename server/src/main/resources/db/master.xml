@@ -7,8 +7,8 @@
     <include file="db/changelog/002_role.xml"/>
     <include file="db/changelog/003_user_role.xml"/>
     <include file="db/changelog/004_admins.xml"/>
-    <include file="db/changelog/005_doctor.xml"/>
     <include file="db/changelog/011_specializations.xml"/>
+    <include file="db/changelog/005_doctor.xml"/>
     <include file="db/changelog/006_patients.xml"/>
     <include file="db/changelog/007_notification_type.xml"/>
     <include file="db/changelog/008_appointment_type.xml"/>
