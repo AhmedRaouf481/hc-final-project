@@ -1,5 +1,8 @@
 package com.clinicare.server.repository;
 
-public class UserRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.clinicare.server.domain.db.User;
+
+public interface UserRepository extends JpaRepository<User,Long> {
 }
