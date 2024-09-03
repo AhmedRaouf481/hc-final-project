@@ -28,6 +28,6 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     @JsonBackReference
-    private List<User> user;
+    private List<User> users;
 
 }
