@@ -9,13 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@DiscriminatorValue("patients")
 public class Patient extends User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
-    // Additional fields specific to Patient, if any
-
-    // Getters and Setters
 }
