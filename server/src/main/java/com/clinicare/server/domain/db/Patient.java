@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("patients")
+@PrimaryKeyJoinColumn(name = "user_id")
+@Table(name = "patients")
 public class Patient extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
