@@ -44,13 +44,13 @@ public class User implements UserDetails {
 
     private String phone;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name = "user_role",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @JsonIgnore
+    @JsonManagedReference
     private List<Role> roles;
 
     @Override

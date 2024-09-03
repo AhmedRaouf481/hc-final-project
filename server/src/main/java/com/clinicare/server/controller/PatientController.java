@@ -32,8 +32,9 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOrupdatePatient(@RequestBody PatientRequest patient) {
-        return ResponseEntity.ok(patientService.savePatient(patient));
+    public ResponseEntity<?> createPatient(@RequestBody PatientRequest patient) {
+        Patient newPatietn = patientService.savePatient(patient);
+        return ResponseEntity.ok(newPatietn);
     }
 
     @DeleteMapping("/{id}")

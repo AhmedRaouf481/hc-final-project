@@ -1,25 +1,30 @@
 package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.Patient;
+import com.clinicare.server.domain.db.Role;
 import com.clinicare.server.domain.request.PatientRequest;
 import com.clinicare.server.exception.ValidationException;
 import com.clinicare.server.repository.PatientRepository;
+import com.clinicare.server.repository.RoleRepository;
 import com.clinicare.server.service.PatientService;
 
+import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
+@RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
 
-    @Autowired
-    private PatientRepository patientRepository;
+    
+    private final PatientRepository patientRepository;
+
+    private final RoleRepository roleRepository;
+
 
     @Override
     public List<Patient> getAllPatients() {
@@ -34,13 +39,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient savePatient(PatientRequest patient) {
-
+        List<Role> roles = roleRepository.findAllById(List.of(3));
         Patient newPatient = new Patient();
         newPatient.setEmail(patient.email());
         newPatient.setPassword(patient.password());
         newPatient.setUsername(patient.username());
         newPatient.setName(patient.name());
         newPatient.setPhone(patient.phone());
+        newPatient.setRoles(roles);
 
         return patientRepository.save(newPatient);
     }
