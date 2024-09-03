@@ -20,9 +20,9 @@
                 referencedTableName="users" referencedColumnNames="id"
                 constraintName="fk_user_doctor"/>
 
-<!--        <addForeignKeyConstraint-->
-<!--                baseTableName="doctors" baseColumnNames="specialization_id"-->
-<!--                referencedTableName="specializations" referencedColumnNames="id" constraintName="fk_spec_doc"/>-->
+        <addForeignKeyConstraint
+                baseTableName="doctors" baseColumnNames="specialization_id"
+                referencedTableName="specializations" referencedColumnNames="id" constraintName="fk_spec_doc"/>
     </changeSet>
 
 </databaseChangeLog>
