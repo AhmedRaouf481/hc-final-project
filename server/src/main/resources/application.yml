@@ -3,8 +3,8 @@ spring:
         name: server
     datasource:
         url: jdbc:postgresql://localhost:5432/hc_final_project
-        username: 
-        password: 
+        username: postgres
+        password: ahmed
         driver-class-name: org.postgresql.Driver
     mvc:
         problemdetails:

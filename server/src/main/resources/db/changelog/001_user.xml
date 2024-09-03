@@ -40,4 +40,9 @@
             <column name="phone" value="+201553216735" />
         </insert>
     </changeSet>
+    <changeSet id="001-03" author="omaraalsaied">
+       <addColumn tableName="users">
+            <column name="name" type="varchar(255)"/>
+       </addColumn>
+    </changeSet>
 </databaseChangeLog>
