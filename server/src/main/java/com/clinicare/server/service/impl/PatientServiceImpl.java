@@ -1,8 +1,11 @@
 package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.Patient;
+import com.clinicare.server.domain.request.PatientRequest;
 import com.clinicare.server.repository.PatientRepository;
 import com.clinicare.server.service.PatientService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +28,14 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findById(id);
     }
 
-    public Patient savePatient(Patient patient) {
-        return patientRepository.save(patient);
+    public Patient savePatient(PatientRequest patient) {
+        Patient newPatient = new Patient();
+        newPatient.setEmail(patient.email());
+        newPatient.setPassword(patient.password());
+        newPatient.setUsername(patient.username());
+        newPatient.setName(patient.name());
+        newPatient.setPhone(patient.phone());
+        return patientRepository.save(newPatient);
     }
 
     public void deletePatient(Long id) {
