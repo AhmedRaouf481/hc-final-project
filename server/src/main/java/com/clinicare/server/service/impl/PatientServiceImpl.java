@@ -20,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
 
+
     
     private final PatientRepository patientRepository;
 
@@ -56,6 +57,25 @@ public class PatientServiceImpl implements PatientService {
         validatePatientId(id);
         patientRepository.deleteById(id);
     }
+
+    @Override
+    public Patient updatePatient(Long id, PatientRequest patientRequest) {
+        // Fetch the existing patient by ID
+        Patient existingPatient = patientRepository.findById(id)
+                .orElseThrow(() -> new ValidationException("Patient not found with id " + id));
+
+        // Update the fields from the PatientRequest
+        existingPatient.setName(patientRequest.name());
+        existingPatient.setEmail(patientRequest.email());
+        existingPatient.setUsername(patientRequest.username());
+        existingPatient.setPhone(patientRequest.phone());
+
+        // Update other fields as necessary
+
+        // Save and return the updated patient
+        return patientRepository.save(existingPatient);
+    }
+
 
     @Override
     public Patient findPatientByEmail(String email) {

@@ -42,4 +42,18 @@ public class PatientController {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("{id}")
+    public ResponseEntity<Patient> updatePatient(
+            @PathVariable Long id,
+            @RequestBody PatientRequest patientRequest) {
+
+        Optional<Patient> existingPatient = patientService.getPatientById(id);
+        if (existingPatient.isPresent()) {
+            Patient updatedPatient = patientService.updatePatient(id, patientRequest);
+            return ResponseEntity.ok(updatedPatient);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
