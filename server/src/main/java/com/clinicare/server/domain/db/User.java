@@ -50,7 +50,7 @@ public class User implements UserDetails {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @JsonManagedReference
+    @JsonIgnore
     private List<Role> roles;
 
     @Override

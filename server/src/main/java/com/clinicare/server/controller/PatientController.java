@@ -1,8 +1,11 @@
 package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.Patient;
+import com.clinicare.server.domain.request.PatientRequest;
 import com.clinicare.server.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,14 +14,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/patient")
+@RequiredArgsConstructor
 public class PatientController {
-
+    
     private final PatientService patientService;
 
-    @Autowired
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
-    }
 
     @GetMapping
     public List<Patient> getAllPatients() {
@@ -32,8 +32,8 @@ public class PatientController {
     }
 
     @PostMapping
-    public Patient createOrupdatePatient(@RequestBody Patient patient) {
-        return patientService.savePatient(patient);
+    public ResponseEntity<?> createOrupdatePatient(@RequestBody PatientRequest patient) {
+        return ResponseEntity.ok(patientService.savePatient(patient));
     }
 
     @DeleteMapping("/{id}")
