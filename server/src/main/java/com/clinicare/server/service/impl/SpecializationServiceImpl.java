@@ -20,9 +20,4 @@ public class SpecializationServiceImpl implements SpecializationService {
     public List<Specialization> findAll() {
         return specRepo.findAll();
     }
-
-    @Override
-    public Optional<Specialization> findById(Long id) {
-       return specRepo.findById(id);
-    }
 }

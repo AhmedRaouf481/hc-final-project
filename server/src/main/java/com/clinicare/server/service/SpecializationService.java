@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public interface SpecializationService  {
+public interface SpecializationService {
     List<Specialization> findAll();
-    Optional<Specialization> findById(Long id);
 }
