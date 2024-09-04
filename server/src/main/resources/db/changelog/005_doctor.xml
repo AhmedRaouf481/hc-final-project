@@ -25,4 +25,11 @@
                 referencedTableName="specializations" referencedColumnNames="id" constraintName="fk_spec_doc"/>
     </changeSet>
 
+    <changeSet id="005-02" author="omaraalsaied">
+        <dropColumn tableName="doctors" columnName="years_of_experience" />
+        <addColumn tableName="doctors">
+            <column type="varchar" name="summary" />
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
