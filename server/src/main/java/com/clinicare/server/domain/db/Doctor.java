@@ -10,13 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name = "user_id")
+@PrimaryKeyJoinColumn(name = "id")
 @Table(name = "doctors")
 public class Doctor extends User {
-
-    @Id
-    @Column(name = "id")
-    private Long id;
 
     @ManyToOne
     @JsonIgnoreProperties("doctor")
