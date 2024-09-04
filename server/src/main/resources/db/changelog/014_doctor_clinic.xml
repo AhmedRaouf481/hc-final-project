@@ -7,11 +7,8 @@
 
     <changeSet id="014-01" author="omar">
         <createTable tableName="doctor_clinics">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="int">
                 <constraints primaryKey="true"/>
-            </column>
-            <column name="doctor_id" type="int">
-                <constraints nullable="false"/>
             </column>
             <column name="clinic_id" type="int">
                 <constraints nullable="false"/>
@@ -19,7 +16,7 @@
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="doctor_clinics" baseColumnNames="doctor_id"
+                baseTableName="doctor_clinics" baseColumnNames="id"
                 referencedTableName="doctors" referencedColumnNames="id"
                 constraintName="fk_doctor_clinic_doctor"/>
 
