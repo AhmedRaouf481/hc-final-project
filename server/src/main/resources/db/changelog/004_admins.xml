@@ -9,21 +9,18 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  id="004-01"  author="omaraalsaied">
+    <changeSet id="004-01" author="omaraalsaied">
         <createTable tableName="admins">
-            <column name="id" type="int(11)" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" />
-            </column>
-            <column name="user_id" type="int(11)">
-                <constraints nullable="false" />
+            <column name="id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="salary" type="decimal(10,2)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
-
-        <addForeignKeyConstraint baseTableName="admins" baseColumnNames="user_id" constraintName="admin_user_id" referencedTableName="users"
-                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="admins" baseColumnNames="id" constraintName="admin_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>
