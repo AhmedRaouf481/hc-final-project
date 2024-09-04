@@ -6,23 +6,29 @@
 
     <changeSet id="005-01" author="omar">
         <createTable tableName="doctors">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="int">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="user_id" type="int"/>
             <column name="specialization_id" type="int"/>
             <column name="years_of_experience" type="int"/>
             <column name="salary" type="decimal(10,2)" />
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="doctors" baseColumnNames="user_id"
+                baseTableName="doctors" baseColumnNames="id"
                 referencedTableName="users" referencedColumnNames="id"
                 constraintName="fk_user_doctor"/>
 
         <addForeignKeyConstraint
                 baseTableName="doctors" baseColumnNames="specialization_id"
                 referencedTableName="specializations" referencedColumnNames="id" constraintName="fk_spec_doc"/>
+    </changeSet>
+
+    <changeSet id="005-02" author="omaraalsaied">
+        <dropColumn tableName="doctors" columnName="years_of_experience" />
+        <addColumn tableName="doctors">
+            <column type="varchar" name="summary" />
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>
