@@ -11,15 +11,12 @@
 
         <changeSet  id="006-01"  author="omaraalsaied">
             <createTable tableName="patients">
-                <column name="id" type="int(11)" autoIncrement="true">
+                <column name="id" type="int(11)" >
                     <constraints nullable="false" primaryKey="true" />
-                </column>
-                <column name="user_id" type="int(11)">
-                    <constraints nullable="false" />
                 </column>
             </createTable>
 
-            <addForeignKeyConstraint baseTableName="patients" baseColumnNames="user_id" constraintName="patient_user_id" referencedTableName="users"
+            <addForeignKeyConstraint baseTableName="patients" baseColumnNames="id" constraintName="patient_user_id" referencedTableName="users"
                                      referencedColumnNames="id" />
         </changeSet>
 
