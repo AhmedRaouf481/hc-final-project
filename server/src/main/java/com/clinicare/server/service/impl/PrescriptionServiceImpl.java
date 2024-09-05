@@ -15,9 +15,29 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
+
     @Override
-    public Prescription findByRecordId(Long recordId) {
-        return prescriptionRepository.findByRecordId(recordId);
+    public List<Prescription> getAllPrescriptions() {
+        return prescriptionRepository.findAll();
+    }
+
+
+    @Override
+    public Optional<Prescription> findByRecordId(Long recordId) {
+        return prescriptionRepository.findById(recordId);
+    }
+
+    @Override
+    public Prescription savePrescription(Prescription prescription) {
+//        return prescription;
+        return prescriptionRepository.save(prescription);
+    }
+
+    @Override
+    public Prescription updatePrescription(Long id, Prescription prescription) {
+        Prescription prescription1 = prescriptionRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Prescription not found"));
+        prescription.setId(prescription1.getId());
+        return prescriptionRepository.save(prescription);
     }
 
     @Override
@@ -25,30 +45,18 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionRepository.deleteById(id);
     }
 
-    @Override
-    public Prescription updatePrescription(Long id, Prescription prescription) {
-        Prescription prescription1 = prescriptionRepository.findById(id).orElseThrow();
-        prescription1.setId(prescription.getId());
-        return prescriptionRepository.save(prescription1);
-    }
 
-    @Override
-    public Prescription savePrescription(Prescription prescription) {
-        return prescriptionRepository.save(prescription);
-    }
 
-    @Override
-    public Optional<Prescription> getPrescriptionById(Long id) {
-        return prescriptionRepository.findById(id);
-    }
 
-    @Override
-    public List<Prescription> getAllPrescriptions() {
-        return prescriptionRepository.findAll();
-    }
+//    @Override
+//    public Optional<Prescription> getPrescriptionById(Long id) {
+//        return prescriptionRepository.findById(id);
+//    }
 
-    @Override
-    public Prescription findPrescriptionByRecordId(Long recordId) {
-        return prescriptionRepository.findByRecordId(recordId);
-    }
+
+
+//    @Override
+//    public Prescription findPrescriptionByRecordId(Long recordId) {
+//        return prescriptionRepository.findPrescriptionByRecordId(recordId);
+//    }
 }

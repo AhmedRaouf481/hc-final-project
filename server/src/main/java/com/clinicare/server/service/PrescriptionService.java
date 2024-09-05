@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PrescriptionService {
-    Prescription findByRecordId(Long recordId);
+    Optional<Prescription> findByRecordId(Long recordId);
 
     void deletePrescription(Long id);
 
@@ -14,9 +14,9 @@ public interface PrescriptionService {
 
     Prescription savePrescription(Prescription prescription);
 
-    Optional<Prescription> getPrescriptionById(Long id);
+//    Optional<Prescription> getPrescriptionById(Long id);
 
     List<Prescription> getAllPrescriptions();
 
-    Prescription findPrescriptionByRecordId(Long recordId);
+//    Prescription findPrescriptionByRecordId(Long recordId);
 }

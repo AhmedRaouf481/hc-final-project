@@ -1,5 +1,6 @@
 package com.clinicare.server.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,9 @@ public class MedicalRecord {
     private Doctor doctor;
 
     @OneToOne(mappedBy = "medicalRecord")
+    @JsonIgnoreProperties("medicalRecord")
     private Prescription prescription;
+
+    //TODO to add the relationship with the appointment
 
 }
