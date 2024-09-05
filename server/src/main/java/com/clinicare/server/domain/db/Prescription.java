@@ -1,12 +1,13 @@
 package com.clinicare.server.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -25,10 +26,13 @@ public class Prescription {
 
     private String instructions;
 
-    private LocalDate issuedAt;
+    @CreationTimestamp
+    @Column(name = "issued_at", updatable = false)
+    private LocalDateTime issuedAt;
 
     @OneToOne
-    @JoinColumn(name = "record_id")
+    @JoinColumn(name = "record_id" , unique = true)
+    @JsonIgnoreProperties("prescription")
     private MedicalRecord medicalRecord;
 
 }

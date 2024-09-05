@@ -1,11 +1,14 @@
 package com.clinicare.server.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -23,6 +26,7 @@ public class MedicalRecord {
 
     private String treatment;
 
+    @CreationTimestamp
     private LocalDate createdAt;
 
     @ManyToOne
@@ -34,6 +38,9 @@ public class MedicalRecord {
     private Doctor doctor;
 
     @OneToOne(mappedBy = "medicalRecord")
+    @JsonIgnoreProperties("medicalRecord")
     private Prescription prescription;
+
+    //TODO to add the relationship with the appointment
 
 }

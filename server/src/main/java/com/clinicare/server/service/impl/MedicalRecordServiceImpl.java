@@ -29,9 +29,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
     @Override
     public MedicalRecord updateMedicalRecord(Long id, MedicalRecord medicalRecordRequest) {
-        MedicalRecord medicalRecord = medicalRecordRepository.findById(id).orElseThrow();
-        medicalRecord.setId(medicalRecordRequest.getId());
-        return medicalRecordRepository.save(medicalRecord);
+        MedicalRecord medicalRecord = medicalRecordRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Medical Record not found"));
+        medicalRecordRequest.setId(medicalRecord.getId());
+        return medicalRecordRepository.save(medicalRecordRequest);
     }
 
     @Override
