@@ -4,7 +4,7 @@ spring:
     datasource:
         url: jdbc:postgresql://localhost:5432/hc_final_project
         username: postgres
-        password: 123456
+        password: ahmed
         driver-class-name: org.postgresql.Driver
     mvc:
         problemdetails:
@@ -19,4 +19,3 @@ spring:
             dialect: org.hibernate.dialect.PostgreSQLDialect
     liquibase:
         change-log: classpath:db/master.xml
-
