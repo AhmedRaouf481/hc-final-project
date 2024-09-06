@@ -1,8 +1,11 @@
 package com.clinicare.server.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -26,4 +29,7 @@ public class Doctor extends User {
     @Column(name = "salary")
     private Double salary;
 
+    @OneToMany(mappedBy = "doctor", orphanRemoval = true)
+    @JsonManagedReference
+    private List<DoctorClinic> doctorClinics;
 }

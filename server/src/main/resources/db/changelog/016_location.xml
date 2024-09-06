@@ -9,9 +9,20 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="address_line_1" type="varchar(255)"/>
-            <column name="address_line_2" type="varchar(255)"/>
+            <column name="address_line" type="varchar(255)"/>
             <column name="city" type="varchar(100)"/>
         </createTable>
+    </changeSet>
+
+
+    <changeSet id="016-03" author="omaraalsaied">
+        <addColumn tableName="locations">
+            <column type="int" name="clinic_id" />
+        </addColumn>
+    </changeSet>
+    <changeSet id="016-04" author="omaraalsaied">
+        <addForeignKeyConstraint baseTableName="locations" baseColumnNames="clinic_id" constraintName="fk_location_clinic_id"
+                                 referencedTableName="clinics"
+                                 referencedColumnNames="id" />
     </changeSet>
 </databaseChangeLog>

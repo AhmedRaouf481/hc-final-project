@@ -12,10 +12,7 @@
             <column name="name" type="varchar(255)">
                 <constraints unique="true" nullable="false" />
             </column>
-            <column name="location_id" type="int" />
         </createTable>
-        <addForeignKeyConstraint constraintName="fk_clinic_location"
-            baseTableName="clinics" baseColumnNames="location_id"
-            referencedTableName="locations" referencedColumnNames="id" />
     </changeSet>
+
 </databaseChangeLog>
