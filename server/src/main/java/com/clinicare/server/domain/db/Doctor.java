@@ -4,8 +4,11 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -35,4 +38,7 @@ public class Doctor extends User {
     @OneToMany(mappedBy ="doctor")
     private Set<Appointment> appointments;
 
+    @OneToMany(mappedBy = "doctor", orphanRemoval = true)
+    @JsonManagedReference(value = "doctor-doctorClinics")
+    private List<DoctorClinic> doctorClinics;
 }

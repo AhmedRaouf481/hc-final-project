@@ -31,4 +31,13 @@
                 constraintName="fk_prescription_record"/>
     </changeSet>
 
+
+    <changeSet id="2024-09-05-unique-record-id" author="your_name">
+        <addUniqueConstraint
+                columnNames="record_id"
+                tableName="prescriptions"
+                constraintName="uk_prescription_record_id"/>
+    </changeSet>
+
+
 </databaseChangeLog>
