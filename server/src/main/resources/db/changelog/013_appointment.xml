@@ -65,4 +65,10 @@
         baseTableName="appointments" baseColumnNames="type_id"
         referencedTableName="appointment_types" referencedColumnNames="id" />
     </changeSet>
+    <changeSet id="013_4" author="araouf">
+        <dropForeignKeyConstraint baseTableName="appointments" constraintName="fk_appointment_slots" />
+        <addForeignKeyConstraint constraintName="fk_appointment_slots"
+        baseTableName="appointments" baseColumnNames="slot_id"
+        referencedTableName="doctor_slots" referencedColumnNames="id" deleteCascade="true" />
+    </changeSet>
 </databaseChangeLog>
