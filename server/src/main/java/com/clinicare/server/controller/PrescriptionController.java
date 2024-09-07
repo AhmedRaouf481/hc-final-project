@@ -3,8 +3,6 @@ package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.Prescription;
 import com.clinicare.server.service.PrescriptionService;
-import jakarta.transaction.Transactional;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -21,6 +21,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private MedicalRecordRepository medicalRecordRepository;
 
 
+
     @Override
     public List<Prescription> getAllPrescriptions() {
         return prescriptionRepository.findAll();
