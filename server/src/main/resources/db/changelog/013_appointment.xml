@@ -40,4 +40,29 @@
             baseTableName="appointments" baseColumnNames="status_id"
             referencedTableName="appointment_status" referencedColumnNames="id" />
     </changeSet>
+    <changeSet id="013_2" author="araouf">
+        <dropColumn tableName="appointments">
+            <column name="diagnosis" type="varchar(255)" />
+            <column name="treatment" type="varchar(255)" />
+        </dropColumn>
+        <addColumn tableName="appointments">
+            <column name="updated_at" type="TIMESTAMP" />
+            <column name="slot_id" type="int">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_appointment_slots"
+        baseTableName="appointments" baseColumnNames="slot_id"
+        referencedTableName="doctor_slots" referencedColumnNames="id" />
+    </changeSet>
+    <changeSet id="013_3" author="araouf">
+        <addColumn tableName="appointments">
+            <column name="type_id" type="int">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_appointment_appointment_type"
+        baseTableName="appointments" baseColumnNames="type_id"
+        referencedTableName="appointment_types" referencedColumnNames="id" />
+    </changeSet>
 </databaseChangeLog>
