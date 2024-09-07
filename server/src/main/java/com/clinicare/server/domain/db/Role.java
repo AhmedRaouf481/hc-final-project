@@ -3,6 +3,7 @@ package com.clinicare.server.domain.db;
 import java.util.List;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    @JsonIgnoreProperties("roles")
+    @JsonBackReference(value = "user-roles")
     private List<User> user;
 
 }
