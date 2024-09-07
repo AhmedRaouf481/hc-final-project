@@ -15,6 +15,15 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), badRequest,
+        badRequest.value(), request.getRequestURI(), ZonedDateTime.now(ZoneId.of("Z")));
+
+        return ResponseEntity.status(badRequest).body(errorResponse);
+    }
 
     // ******************** Exception handlers for authentication and jwt exceptions *******************
     @ExceptionHandler(AuthenticationException.class)
