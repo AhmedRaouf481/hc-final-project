@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "appointment_status")
-public class AppointmentStatus {
+@Table(name = "appointment_types")
+public class AppointmentType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy ="status")
+    @OneToMany(mappedBy ="type")
     private Set<Appointment> appointments;
 }

@@ -10,26 +10,31 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "appointments")
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     // add relation with clinic 
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "status_id")
     private AppointmentStatus status;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "type_id")
+    private AppointmentType type;
+
+    @ManyToOne()
     @JoinColumn(name = "slot_id", referencedColumnName = "id")
     private Slot slot;
 

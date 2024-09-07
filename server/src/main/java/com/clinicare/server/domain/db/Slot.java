@@ -1,10 +1,8 @@
 package com.clinicare.server.domain.db;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +22,7 @@ public class Slot {
     private Long id;
 
     @ManyToOne
-    // @JoinColumn(name = "doctor_id")
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     // add relation with clinic 
@@ -35,7 +33,8 @@ public class Slot {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    @OneToMany(mappedBy = "slot")
-    private Set<Appointment> appointment;
+    @OneToMany(mappedBy = "slot", fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<Appointment> appointments = new HashSet<Appointment>();
 
 }

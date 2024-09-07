@@ -1,9 +1,9 @@
 package com.clinicare.server.domain.db;
 
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,5 +31,8 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy ="doctor")
     private Set<Slot> slots;
+
+    @OneToMany(mappedBy ="doctor")
+    private Set<Appointment> appointments;
 
 }

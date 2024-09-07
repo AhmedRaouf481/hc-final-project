@@ -14,7 +14,6 @@
                 <column name="id" type="int(11)" >
                     <constraints nullable="false" primaryKey="true" />
                 </column>
-
             </createTable>
 
             <addForeignKeyConstraint baseTableName="patients" baseColumnNames="id" constraintName="patient_user_id" referencedTableName="users"

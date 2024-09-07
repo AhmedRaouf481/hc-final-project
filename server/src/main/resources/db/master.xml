@@ -18,9 +18,9 @@
     <include file="db/changelog/016_location.xml"/>
     <include file="db/changelog/017_clinic.xml"/>
     <include file="db/changelog/014_doctor_clinic.xml"/>
+    <include file="db/changelog/018_doctor_slots.xml"/>
     <include file="db/changelog/013_appointment.xml"/>
     <include file="db/changelog/015_invoice.xml"/>
-    <include file="db/changelog/018_doctor_slots.xml"/>
     <include file="db/changelog/019_medical_record.xml"/>
     <include file="db/changelog/020_prescription.xml"/>
 </databaseChangeLog>
