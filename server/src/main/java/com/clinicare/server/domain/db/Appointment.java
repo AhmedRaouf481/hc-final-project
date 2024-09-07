@@ -1,5 +1,6 @@
 package com.clinicare.server.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -39,6 +40,10 @@ public class Appointment {
     @ManyToOne()
     @JoinColumn(name = "slot_id", referencedColumnName = "id")
     private Slot slot;
+
+    @OneToOne(mappedBy = "appointment")
+    @JsonIgnoreProperties("appointment")
+    private MedicalRecord medicalRecord;
 
 
 }
