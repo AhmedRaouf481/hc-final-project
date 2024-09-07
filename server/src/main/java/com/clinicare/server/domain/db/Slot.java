@@ -24,6 +24,10 @@ public class Slot {
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
+    
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
 
     // add relation with clinic 
     

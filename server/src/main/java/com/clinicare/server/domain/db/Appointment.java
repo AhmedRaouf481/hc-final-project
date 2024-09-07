@@ -23,8 +23,10 @@ public class Appointment {
     @ManyToOne()
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
-
-    // add relation with clinic 
+        
+    @ManyToOne()
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
 
     @ManyToOne()
     @JoinColumn(name = "status_id")

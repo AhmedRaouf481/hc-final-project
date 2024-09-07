@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -33,5 +34,11 @@ public class Clinic {
     @JsonManagedReference(value = "clinic-doctorClinics")
     private List<DoctorClinic> doctorClinicList;
 
+    
+    @OneToMany(mappedBy ="clinic")
+    private Set<Slot> slots;
+
+    @OneToMany(mappedBy ="clinic")
+    private Set<Appointment> appointments;
 
 }
