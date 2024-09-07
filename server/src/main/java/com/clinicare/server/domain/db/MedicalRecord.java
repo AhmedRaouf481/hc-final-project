@@ -41,6 +41,10 @@ public class MedicalRecord {
     @JsonIgnoreProperties("medicalRecord")
     private Prescription prescription;
 
-    //TODO to add the relationship with the appointment
+    @OneToOne
+    @JoinColumn(name = "appointment_id" , unique = true)
+    @JsonIgnoreProperties("medicalRecord")
+    private Appointment appointment;
+
 
 }

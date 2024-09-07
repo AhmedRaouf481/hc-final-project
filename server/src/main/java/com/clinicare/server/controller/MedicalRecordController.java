@@ -3,6 +3,7 @@ package com.clinicare.server.controller;
 import com.clinicare.server.domain.db.MedicalRecord;
 import com.clinicare.server.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,33 +16,34 @@ public class MedicalRecordController {
     private  MedicalRecordService medicalRecordService;
 
     @GetMapping
-    public List<MedicalRecord> getAllMedicalRecords() {
-        return medicalRecordService.getAllMedicalRecords();
+    public ResponseEntity<?> getAllMedicalRecords() {
+        return ResponseEntity.ok(medicalRecordService.getAllMedicalRecords());
     }
 
     @GetMapping("/{id}")
-    public Optional<MedicalRecord> getMedicalRecordById(@PathVariable Long id) {
-        return medicalRecordService.getMedicalRecordById(id);
+    public ResponseEntity<?> getMedicalRecordById(@PathVariable Long id) {
+        return ResponseEntity.ok(medicalRecordService.getMedicalRecordById(id));
     }
 
     @GetMapping("/patient/{id}")
-    public MedicalRecord getMedicalRecordByPatientId(@PathVariable Long id) {
-        return medicalRecordService.findMedicalRecordByPatientId(id);
+    public ResponseEntity<?> getMedicalRecordByPatientId(@PathVariable Long id) {
+        return ResponseEntity.ok(medicalRecordService.findMedicalRecordByPatientId(id));
     }
     @GetMapping("/doctor/{id}")
-    public MedicalRecord getMedicalRecordByDoctorId(@PathVariable Long id) {
-        return medicalRecordService.findMedicalRecordByDoctorId(id);
+    public ResponseEntity<?> getMedicalRecordByDoctorId(@PathVariable Long id) {
+        return ResponseEntity.ok(medicalRecordService.findMedicalRecordByDoctorId(id));
     }
     @DeleteMapping("/{id}")
-    public void deleteMedicalRecord(@PathVariable Long id) {
+    public ResponseEntity<?> deleteMedicalRecord(@PathVariable Long id) {
         medicalRecordService.deleteMedicalRecord(id);
+        return ResponseEntity.noContent().build();
     }
     @PutMapping("/{id}")
-    public MedicalRecord updateMedicalRecord(@PathVariable Long id,@RequestBody MedicalRecord medicalRecord) {
-        return medicalRecordService.updateMedicalRecord(id, medicalRecord);
+    public ResponseEntity<?> updateMedicalRecord(@PathVariable Long id,@RequestBody MedicalRecord medicalRecord) {
+        return ResponseEntity.ok(medicalRecordService.updateMedicalRecord(id,medicalRecord));
     }
     @PostMapping
-    public MedicalRecord saveMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
-        return medicalRecordService.saveMedicalRecord(medicalRecord);
+    public ResponseEntity<?> saveMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+        return ResponseEntity.ok(medicalRecordService.saveMedicalRecord(medicalRecord));
     }
 }
