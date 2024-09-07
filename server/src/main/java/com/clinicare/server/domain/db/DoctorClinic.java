@@ -20,11 +20,11 @@ public class DoctorClinic {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "doctor-doctorClinics")
     private Doctor doctor;
 
     @ManyToOne
     @JoinColumn(name = "clinic_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "clinic-doctorClinics")
     private Clinic clinic;
 }

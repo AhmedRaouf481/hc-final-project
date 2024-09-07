@@ -30,6 +30,6 @@ public class Doctor extends User {
     private Double salary;
 
     @OneToMany(mappedBy = "doctor", orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference(value = "doctor-doctorClinics")
     private List<DoctorClinic> doctorClinics;
 }

@@ -30,7 +30,7 @@ public class Clinic {
     private List<Location> locations = new ArrayList<>();
 
     @OneToMany(mappedBy = "clinic", orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference(value = "clinic-doctorClinics")
     private List<DoctorClinic> doctorClinicList;
 
 
