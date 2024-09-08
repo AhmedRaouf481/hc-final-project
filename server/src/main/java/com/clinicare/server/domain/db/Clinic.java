@@ -2,6 +2,7 @@ package com.clinicare.server.domain.db;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,9 +37,11 @@ public class Clinic {
 
     
     @OneToMany(mappedBy ="clinic")
+    @JsonIgnore
     private Set<Slot> slots;
 
     @OneToMany(mappedBy ="clinic")
+    @JsonIgnore
     private Set<Appointment> appointments;
 
 }
