@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clinicare.server.domain.db.Appointment;
+import com.clinicare.server.domain.request.ChangeStatusApptRequest;
+import com.clinicare.server.domain.request.RescheduleAppointmentRequest;
 import com.clinicare.server.service.AppointmentService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -38,14 +41,14 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.getById(id));
     }
 
-    @GetMapping("doctor/{doctorId}")
-    public ResponseEntity<?> getAppointmentByDortorId(@PathVariable Long doctorId) {
-        return ResponseEntity.ok(appointmentService.getByDoctorId(doctorId));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> rescheduleAppintment(@PathVariable Long id,@Valid @RequestBody RescheduleAppointmentRequest appointment) {
+        return ResponseEntity.ok(appointmentService.reschaduleAppointment(id,appointment.getSlotId()));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateAppointment(@PathVariable Long id, @RequestBody Appointment appointment) {
-        return ResponseEntity.ok(appointmentService.updateAppointment(id,appointment));
+    @PutMapping("status/{id}")
+    public ResponseEntity<?> changeApptStatus(@PathVariable Long id,@Valid @RequestBody ChangeStatusApptRequest appointment) {
+        return ResponseEntity.ok(appointmentService.changeStatus(id,appointment.getStatusId()));
     }
     
 

@@ -11,9 +11,9 @@ public interface AppointmentService {
 
     Appointment getById(Long id);
 
-    List<Appointment> getByDoctorId(Long doctorId);
+    Appointment reschaduleAppointment(Long id, Long slotId);
 
-    Appointment updateAppointment(Long id, Appointment appointmentDetails);
+    Appointment changeStatus(Long id, Long statusId);
 
     void deleteAppointment(Long id);
 }

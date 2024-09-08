@@ -35,9 +35,6 @@ public class Doctor extends User {
     @OneToMany(mappedBy ="doctor")
     private Set<Slot> slots;
 
-    @OneToMany(mappedBy ="doctor")
-    private Set<Appointment> appointments;
-
     @OneToMany(mappedBy = "doctor", orphanRemoval = true)
     @JsonManagedReference(value = "doctor-doctorClinics")
     private List<DoctorClinic> doctorClinics;

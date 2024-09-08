@@ -17,28 +17,20 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @ManyToOne()
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
-        
-    @ManyToOne()
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
-
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "status_id")
     private AppointmentStatus status;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "type_id")
     private AppointmentType type;
 
-    @ManyToOne()
-    @JoinColumn(name = "slot_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "slot_id")
     private Slot slot;
 
     @OneToOne(mappedBy = "appointment")
