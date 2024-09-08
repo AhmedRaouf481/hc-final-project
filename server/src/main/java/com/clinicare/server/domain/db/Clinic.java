@@ -1,8 +1,9 @@
 package com.clinicare.server.domain.db;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,14 +32,16 @@ public class Clinic {
     private List<Location> locations = new ArrayList<>();
 
     @OneToMany(mappedBy = "clinic", orphanRemoval = true)
-    @JsonManagedReference(value = "clinic-doctorClinics")
+    @JsonBackReference(value = "clinic-doctorClinics")
     private List<DoctorClinic> doctorClinicList;
 
     
     @OneToMany(mappedBy ="clinic")
+    @JsonIgnore
     private Set<Slot> slots;
 
     @OneToMany(mappedBy ="clinic")
+    @JsonIgnore
     private Set<Appointment> appointments;
 
 }
