@@ -2,6 +2,8 @@ package com.clinicare.server.domain.db;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +22,6 @@ public class AppointmentStatus {
     private String name;
 
     @OneToMany(mappedBy ="status")
+    @JsonIgnore
     private Set<Appointment> appointments;
 }

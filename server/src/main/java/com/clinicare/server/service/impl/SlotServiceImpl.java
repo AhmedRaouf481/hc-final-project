@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.clinicare.server.domain.db.Slot;
 import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.exception.ValidationException;
-import com.clinicare.server.repository.ClinicRepository;
 import com.clinicare.server.repository.DoctorRepository;
+import com.clinicare.server.repository.LocationRepository;
 import com.clinicare.server.repository.SlotRepository;
 import com.clinicare.server.service.SlotService;
 
@@ -23,7 +23,7 @@ public class SlotServiceImpl implements SlotService {
 
     private final SlotRepository slotRepository;
     private final DoctorRepository doctorRepository;
-    private final ClinicRepository clinicRepository;
+    private final LocationRepository locationRepository;
 
     @Override
     @Transactional
@@ -32,7 +32,7 @@ public class SlotServiceImpl implements SlotService {
         if (!doctorRepository.existsById(slot.getDoctor().getId())) {
             throw new ResourceNotFoundException("Doctor");
         }
-        if (!clinicRepository.existsById(slot.getClinic().getId())) {
+        if (!locationRepository.existsById(slot.getClinicLocation().getId())) {
             throw new ResourceNotFoundException("Clinic");
         }
         if (!isSlotAvailable(slot.getStartTime(),duration,slot.getDoctor().getId())) {

@@ -51,8 +51,19 @@
             </column>
 
         </addColumn>
-
-
     </changeSet>
-
+    <changeSet id="018-03" author="araouf">
+        <dropForeignKeyConstraint baseTableName="doctor_slots" constraintName="fk_doctor_schedule_clinic" />
+        <dropColumn tableName="doctor_slots">
+            <column  name="clinic_id"/>
+        </dropColumn>
+        <addColumn tableName="doctor_slots">
+            <column name="location_id" type="int">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_doctor_slots_locations"
+        baseTableName="doctor_slots" baseColumnNames="location_id"
+        referencedTableName="locations" referencedColumnNames="id" />
+    </changeSet>
 </databaseChangeLog>
