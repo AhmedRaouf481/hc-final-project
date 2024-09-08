@@ -1,6 +1,7 @@
 package com.clinicare.server.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,6 @@ public class DoctorClinic {
 
     @ManyToOne
     @JoinColumn(name = "clinic_id", nullable = false)
-    @JsonBackReference(value = "clinic-doctorClinics")
+    @JsonManagedReference(value = "clinic-doctorClinics")
     private Clinic clinic;
 }
