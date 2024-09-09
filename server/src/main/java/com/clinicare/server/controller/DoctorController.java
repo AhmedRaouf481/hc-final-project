@@ -28,17 +28,22 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Doctor doctor) {
+        //TODO using DTOs
         return ResponseEntity.ok(doctorService.saveOrUpdate(doctor));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Doctor doctor)
     {
+        //TODO using DTOs
         Optional<Doctor> desiredDoctor = doctorService.findById(id);
         if(desiredDoctor.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         doctor.setId(id);
+        if(doctor.getPassword() == null)
+            doctor.setPassword(desiredDoctor.get().getPassword());
+        doctor.setCreatedAt(desiredDoctor.get().getCreatedAt());
         return ResponseEntity.ok(doctorService.saveOrUpdate(doctor));
     }
 

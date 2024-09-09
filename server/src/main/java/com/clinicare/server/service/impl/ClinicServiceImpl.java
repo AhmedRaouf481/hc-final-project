@@ -27,9 +27,7 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Optional<Clinic> findById(Long id) {
-        return Optional.ofNullable(clinicRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("clinic Id not found")
-        ));
+       return clinicRepository.findById(id);
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
 @Table(name = "doctors")
@@ -32,10 +31,18 @@ public class Doctor extends User {
     @Column(name = "salary")
     private Double salary;
 
-    @OneToMany(mappedBy ="doctor")
+    @OneToMany(mappedBy = "doctor")
     private Set<Slot> slots;
 
-    @OneToMany(mappedBy = "doctor", orphanRemoval = true)
-    @JsonManagedReference(value = "doctor-doctorClinics")
-    private List<DoctorClinic> doctorClinics;
+//    @OneToMany(mappedBy = "doctor")
+//    private Set<Appointment> appointments;
+
+//    @OneToMany(mappedBy = "doctor", orphanRemoval = true, cascade = CascadeType.ALL)
+//    @JsonManagedReference(value = "doctor-doctorClinics")
+//    private List<DoctorClinic> doctorClinics;
+
+    @ManyToMany
+    @JoinTable(name = "doctor_clinics", joinColumns = @JoinColumn(name = "doctor_id"), inverseJoinColumns = @JoinColumn(name = "clinic_id"))
+    @JsonIgnoreProperties("doctors")
+    private List<Clinic> doctorClinics;
 }
