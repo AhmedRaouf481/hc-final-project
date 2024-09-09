@@ -34,8 +34,8 @@ public class Doctor extends User {
     @OneToMany(mappedBy = "doctor")
     private Set<Slot> slots;
 
-    @OneToMany(mappedBy = "doctor")
-    private Set<Appointment> appointments;
+//    @OneToMany(mappedBy = "doctor")
+//    private Set<Appointment> appointments;
 
 //    @OneToMany(mappedBy = "doctor", orphanRemoval = true, cascade = CascadeType.ALL)
 //    @JsonManagedReference(value = "doctor-doctorClinics")
@@ -44,5 +44,5 @@ public class Doctor extends User {
     @ManyToMany
     @JoinTable(name = "doctor_clinics", joinColumns = @JoinColumn(name = "doctor_id"), inverseJoinColumns = @JoinColumn(name = "clinic_id"))
     @JsonIgnoreProperties("doctors")
-    private List<Clinic> clinics;
+    private List<Clinic> doctorClinics;
 }

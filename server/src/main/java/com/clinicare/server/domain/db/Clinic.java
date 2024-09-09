@@ -34,17 +34,8 @@ public class Clinic {
 //    @JsonManagedReference(value = "clinic-doctorClinics")
 //    private List<DoctorClinic> doctorClinicList;
 
-    @ManyToMany(mappedBy = "clinics")
+    @ManyToMany(mappedBy = "doctorClinics")
     @JsonIgnoreProperties("clinics")
     private List<Doctor> doctors;
-
-    
-    @OneToMany(mappedBy ="clinic")
-    @JsonIgnore
-    private Set<Slot> slots;
-
-    @OneToMany(mappedBy ="clinic")
-    @JsonIgnore
-    private Set<Appointment> appointments;
 
 }
