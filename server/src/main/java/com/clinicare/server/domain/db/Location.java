@@ -1,6 +1,10 @@
 package com.clinicare.server.domain.db;
 
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +31,8 @@ public class Location {
     @JsonIgnoreProperties("locations")
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
+        
+    @OneToMany(mappedBy ="clinicLocation")
+    @JsonIgnore
+    private Set<Slot> slots;
 }

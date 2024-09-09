@@ -1,9 +1,10 @@
 package com.clinicare.server.domain.db;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.clinicare.server.domain.db.enums.DayOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,16 +27,15 @@ public class Slot {
     private Doctor doctor;
     
     @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
-
-    // add relation with clinic 
+    @JoinColumn(name = "location_id")
+    private Location clinicLocation;
     
     @Column(name = "start_time")
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime startTime;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "week_day")
+    private DayOfWeek weekDay;
 
     @OneToMany(mappedBy = "slot", fetch = FetchType.LAZY)
     @Builder.Default
