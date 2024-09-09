@@ -11,7 +11,7 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long invoiceId;
+    private Long Id;
 
     @ManyToOne
     @JoinColumn(name = "appointment_id", nullable = false)
@@ -29,11 +29,11 @@ public class Invoice {
 
     // Getters and setters
     public Long getInvoiceId() {
-        return invoiceId;
+        return Id;
     }
 
     public void setInvoiceId(Long invoiceId) {
-        this.invoiceId = invoiceId;
+        this.Id = invoiceId;
     }
 
     public Appointment getAppointment() {
