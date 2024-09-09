@@ -1,15 +1,12 @@
 package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.Clinic;
-import com.clinicare.server.domain.db.Location;
-import com.clinicare.server.repository.LocationRepository;
 import com.clinicare.server.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +16,6 @@ public class ClinicController {
 
     @Autowired
     private ClinicService clinicService;
-
-    @Autowired
-    private LocationRepository locationRepository;
 
 
     @GetMapping
@@ -39,57 +33,66 @@ public class ClinicController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clinicService.saveOrUpdate(clinic));
     }
 
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Clinic clinic) {
+//        Optional<Clinic> desiredClinic = clinicService.findById(id);
+//        if (desiredClinic.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        clinic.setId(id);
+//
+//        // if no locations sent in the body, the locations will stay the same
+//        if (clinic.getLocations().isEmpty()) {
+//            clinic.setLocations(desiredClinic.get().getLocations());
+//        } else {
+//            // initiating a list that will contain the updated or created locations
+//            List<Location> updatedLocations = new ArrayList<>();
+//            // checking if the array is not null too
+//            if (clinic.getLocations() != null) {
+//                for (Location newLocation : clinic.getLocations()) {
+//                    // checking if location obj has id so it's already a saved once
+//                    if (newLocation.getId() != null) {
+//                        Location existingLocation = locationRepository.findById(newLocation.getId())
+//                                .orElseThrow(() -> new IllegalArgumentException("Location with id " + newLocation.getId() + " not found"));
+//                        // setting the found location to current new data from request and overwriting its clinic {could be a problem but later ...}
+//                        existingLocation.setAddressLine(newLocation.getAddressLine());
+//                        existingLocation.setCity(newLocation.getCity());
+//                        existingLocation.setClinic(clinic);
+//                        updatedLocations.add(existingLocation);
+//                    } else {
+//                        // Creating new location
+//                        Location newLoc = new Location();
+//                        newLoc.setAddressLine(newLocation.getAddressLine());
+//                        newLoc.setCity(newLocation.getCity());
+//                        newLoc.setClinic(clinic);
+//                        updatedLocations.add(newLoc);
+//
+//                    }
+//                }
+//            }
+//            // setting locations to the newly updated clinic object
+//            clinic.setLocations(updatedLocations);
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(clinicService.saveOrUpdate(clinic));
+//    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Clinic clinic) {
-        Optional<Clinic> desiredClinic = clinicService.findById(id);
-        if (desiredClinic.isEmpty()) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Clinic requestClinic) {
+        Optional<Clinic> clinic = clinicService.findById(id);
+        if (clinic.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("clinic not found");
         }
-
-        clinic.setId(id);
-
-        // if no locations sent in the body, the locations will stay the same
-        if (clinic.getLocations().isEmpty()) {
-            clinic.setLocations(desiredClinic.get().getLocations());
-        } else {
-            // initiating a list that will contain the updated or created locations
-            List<Location> updatedLocations = new ArrayList<>();
-            // checking if the array is not null too
-            if (clinic.getLocations() != null) {
-                for (Location newLocation : clinic.getLocations()) {
-                    // checking if location obj has id so it's already a saved once
-                    if (newLocation.getId() != null) {
-                        Location existingLocation = locationRepository.findById(newLocation.getId())
-                                .orElseThrow(() -> new IllegalArgumentException("Location with id " + newLocation.getId() + " not found"));
-                        // setting the found location to current new data from request and overwriting its clinic {could be a problem but later ...}
-                        existingLocation.setAddressLine(newLocation.getAddressLine());
-                        existingLocation.setCity(newLocation.getCity());
-                        existingLocation.setClinic(clinic);
-                        updatedLocations.add(existingLocation);
-                    } else {
-                        // Creating new location
-                        Location newLoc = new Location();
-                        newLoc.setAddressLine(newLocation.getAddressLine());
-                        newLoc.setCity(newLocation.getCity());
-                        newLoc.setClinic(clinic);
-                        updatedLocations.add(newLoc);
-
-                    }
-                }
-            }
-            // setting locations to the newly updated clinic object
-            clinic.setLocations(updatedLocations);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(clinicService.saveOrUpdate(clinic));
+        requestClinic.setId(clinic.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(clinicService.saveOrUpdate(requestClinic));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        Optional<Clinic> clinic = Optional.ofNullable(clinicService.findById(id).orElseThrow(
-                ()-> new IllegalArgumentException("clinic with this id isn't found"))
-        );
-        if (clinic.isEmpty())
-        {
+        Optional<Clinic> clinic = clinicService.findById(id);
+
+        if (clinic.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("clinic not found");
         }
         clinicService.delete(clinic.get().getId());

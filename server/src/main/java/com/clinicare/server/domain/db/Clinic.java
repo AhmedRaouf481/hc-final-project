@@ -1,7 +1,6 @@
 package com.clinicare.server.domain.db;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -31,9 +30,13 @@ public class Clinic {
     @JsonIgnoreProperties("clinic")
     private List<Location> locations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "clinic", orphanRemoval = true)
-    @JsonBackReference(value = "clinic-doctorClinics")
-    private List<DoctorClinic> doctorClinicList;
+//    @OneToMany(mappedBy = "clinic", orphanRemoval = true, cascade = CascadeType.ALL)
+//    @JsonManagedReference(value = "clinic-doctorClinics")
+//    private List<DoctorClinic> doctorClinicList;
+
+    @ManyToMany(mappedBy = "clinics")
+    @JsonIgnoreProperties("clinics")
+    private List<Doctor> doctors;
 
     
     @OneToMany(mappedBy ="clinic")
