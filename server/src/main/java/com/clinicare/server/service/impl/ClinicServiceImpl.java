@@ -1,8 +1,12 @@
 package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.Clinic;
+import com.clinicare.server.domain.db.Doctor;
 import com.clinicare.server.domain.db.Location;
+import com.clinicare.server.domain.response.ClinicProjection;
+import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.repository.ClinicRepository;
+import com.clinicare.server.repository.DoctorRepository;
 import com.clinicare.server.repository.LocationRepository;
 import com.clinicare.server.service.ClinicService;
 import jakarta.transaction.Transactional;
@@ -20,6 +24,9 @@ public class ClinicServiceImpl implements ClinicService {
     @Autowired
     private LocationRepository locationRepository;
 
+    @Autowired
+    private DoctorRepository doctorRepository;
+
     @Override
     public List<Clinic> finaAll() {
         return clinicRepository.findAll();
@@ -27,7 +34,7 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Optional<Clinic> findById(Long id) {
-       return clinicRepository.findById(id);
+        return clinicRepository.findById(id);
     }
 
     @Override
@@ -40,7 +47,7 @@ public class ClinicServiceImpl implements ClinicService {
                 locationRepository.save(location);
 
             }
-        return savedClinic;
+            return savedClinic;
         }
         return clinicRepository.save(clinic);
     }
@@ -48,8 +55,7 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public void delete(Long id) {
         Clinic clinic = clinicRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("clinic id not found")
-        );
+                () -> new IllegalArgumentException("clinic id not found"));
         clinicRepository.delete(clinic);
     }
 
@@ -69,5 +75,13 @@ public class ClinicServiceImpl implements ClinicService {
                 })
                 .orElse(false);
 
+    }
+
+    @Override
+    public List<ClinicProjection> findByDoctorId(Long doctorId) {
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor"));
+
+        return clinicRepository.findByDoctors(doctor);
     }
 }
