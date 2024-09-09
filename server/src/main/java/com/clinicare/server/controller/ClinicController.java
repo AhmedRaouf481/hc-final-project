@@ -1,7 +1,7 @@
 package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.Clinic;
-import com.clinicare.server.domain.response.ClinicProjection;
+import com.clinicare.server.domain.response.ClinicWithLocationProjection;
 import com.clinicare.server.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class ClinicController {
     }
 
     @GetMapping("doctor/{doctorId}")
-    public ResponseEntity<List<ClinicProjection>> getByDoctorId(@PathVariable Long doctorId) {
+    public ResponseEntity<List<ClinicWithLocationProjection>> getByDoctorId(@PathVariable Long doctorId) {
         return ResponseEntity.ok(clinicService.findByDoctorId(doctorId));
     }
 

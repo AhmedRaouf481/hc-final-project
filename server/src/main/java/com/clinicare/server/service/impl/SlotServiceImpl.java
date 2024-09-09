@@ -6,6 +6,7 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 
 import com.clinicare.server.domain.db.Slot;
+import com.clinicare.server.domain.response.SlotProjection;
 import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.exception.ValidationException;
 import com.clinicare.server.repository.DoctorRepository;
@@ -66,7 +67,7 @@ public class SlotServiceImpl implements SlotService {
     }
 
     @Override
-    public List<Slot> getByDoctorId(Long doctorId) {
+    public List<SlotProjection> getByDoctorId(Long doctorId) {
         doctorRepository.findById(doctorId).orElseThrow(() -> new ResourceNotFoundException("Doctor"));
         return slotRepository.findByDoctorId(doctorId);
     }
@@ -74,9 +75,9 @@ public class SlotServiceImpl implements SlotService {
     private boolean isSlotAvailable(LocalTime startTime, Duration duration, Long doctorId) {
         LocalTime endTime = startTime.plus(duration);
 
-        List<Slot> existingSlots = slotRepository.findByDoctorId(doctorId);
+        List<SlotProjection> existingSlots = slotRepository.findByDoctorId(doctorId);
 
-        for (Slot slot : existingSlots) {
+        for (SlotProjection slot : existingSlots) {
             LocalTime existingStartTime = slot.getStartTime();
             LocalTime existingEndTime = existingStartTime.plus(duration);
 

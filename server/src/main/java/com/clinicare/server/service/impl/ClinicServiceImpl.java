@@ -3,7 +3,7 @@ package com.clinicare.server.service.impl;
 import com.clinicare.server.domain.db.Clinic;
 import com.clinicare.server.domain.db.Doctor;
 import com.clinicare.server.domain.db.Location;
-import com.clinicare.server.domain.response.ClinicProjection;
+import com.clinicare.server.domain.response.ClinicWithLocationProjection;
 import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.repository.ClinicRepository;
 import com.clinicare.server.repository.DoctorRepository;
@@ -78,7 +78,7 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public List<ClinicProjection> findByDoctorId(Long doctorId) {
+    public List<ClinicWithLocationProjection> findByDoctorId(Long doctorId) {
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor"));
 
