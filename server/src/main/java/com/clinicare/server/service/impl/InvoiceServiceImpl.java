@@ -53,6 +53,25 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceRepository.delete(invoice);
     }
 
+    @Override
+    public Invoice getInvoiceByAppointmentId(long Id) {
+        Optional<Invoice> invoice=invoiceRepository.findByAppointmentId(Id);
+        if (invoice.isEmpty()) {
+            throw new ResourceNotFoundException("Invoice");
+        }
+        return invoice.get();
+    }
+
+    @Override
+    public Invoice getInvoiceByPatientId(long Id) {
+        Optional<Invoice> invoice=invoiceRepository.findByPatientId(Id);
+        if (invoice.isEmpty()) {
+            throw new ResourceNotFoundException("Invoice");
+        }
+        return invoice.get();
+    }
+
+
     private void validateInvoice(Invoice invoice) {
         if (invoice.getAmount() <= 0) {
             throw new ValidationException("Invoice amount must be greater than zero.");

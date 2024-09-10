@@ -15,4 +15,8 @@ public interface InvoiceService {
 
     // Method to delete an invoice
     void deleteInvoice(Long invoiceId);
+
+    Invoice getInvoiceByAppointmentId(long Id);
+
+    Invoice getInvoiceByPatientId(long Id);
 }

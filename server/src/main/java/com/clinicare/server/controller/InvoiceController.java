@@ -19,6 +19,16 @@ public class InvoiceController {
         Invoice invoice = invoiceService.getInvoiceById(id);
         return ResponseEntity.ok(invoice);
     }
+    @GetMapping("/appointment/{id}")
+    public ResponseEntity<Invoice> getInvoiceAppointment(@PathVariable long id) {
+        Invoice invoice = invoiceService.getInvoiceByAppointmentId(id);
+        return ResponseEntity.ok(invoice);
+    }
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<Invoice> getInvoicePatient(@PathVariable long id) {
+        Invoice invoice = invoiceService.getInvoiceByAppointmentId(id);
+        return ResponseEntity.ok(invoice);
+    }
 
     @PostMapping
     public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice) {
