@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/invoices")
 public class InvoiceController {
@@ -25,8 +27,8 @@ public class InvoiceController {
         return ResponseEntity.ok(invoice);
     }
     @GetMapping("/patient/{id}")
-    public ResponseEntity<Invoice> getInvoicePatient(@PathVariable long id) {
-        Invoice invoice = invoiceService.getInvoiceByAppointmentId(id);
+    public ResponseEntity<List<Invoice>> getInvoicePatient(@PathVariable long id) {
+        List<Invoice> invoice = invoiceService.getInvoiceByPatientId(id);
         return ResponseEntity.ok(invoice);
     }
 

@@ -11,6 +11,7 @@ import com.clinicare.server.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,12 +64,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Invoice getInvoiceByPatientId(long Id) {
-        Optional<Invoice> invoice=invoiceRepository.findByPatientId(Id);
+    public List<Invoice> getInvoiceByPatientId(long Id) {
+        List<Invoice> invoice=invoiceRepository.findByPatientId(Id);
         if (invoice.isEmpty()) {
             throw new ResourceNotFoundException("Invoice");
         }
-        return invoice.get();
+        return invoice;
     }
 
 

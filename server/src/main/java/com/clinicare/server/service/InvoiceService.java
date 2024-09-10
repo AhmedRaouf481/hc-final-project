@@ -3,6 +3,8 @@ package com.clinicare.server.service;
 
 import com.clinicare.server.domain.db.Invoice;
 
+import java.util.List;
+
 public interface InvoiceService {
     // Method to retrieve an invoice by ID
     Invoice getInvoiceById(Long invoiceId);
@@ -18,5 +20,5 @@ public interface InvoiceService {
 
     Invoice getInvoiceByAppointmentId(long Id);
 
-    Invoice getInvoiceByPatientId(long Id);
+    List<Invoice> getInvoiceByPatientId(long Id);
 }
