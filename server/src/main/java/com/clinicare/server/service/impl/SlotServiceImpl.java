@@ -5,6 +5,8 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.clinicare.server.domain.db.Doctor;
+import com.clinicare.server.domain.db.Location;
 import com.clinicare.server.domain.db.Slot;
 import com.clinicare.server.domain.response.SlotProjection;
 import com.clinicare.server.exception.ResourceNotFoundException;
@@ -33,12 +35,11 @@ public class SlotServiceImpl implements SlotService {
         if (!doctorRepository.existsById(slot.getDoctor().getId())) {
             throw new ResourceNotFoundException("Doctor");
         }
-        if (!locationRepository.existsById(slot.getClinicLocation().getId())) {
-            throw new ResourceNotFoundException("Clinic");
-        }
-        if (!isSlotAvailable(slot.getStartTime(),duration,slot.getDoctor().getId())) {
+        Location clinicLocation = validateClinicLocation(slot.getClinicLocation().getId(), slot.getDoctor().getId());
+        if (!isSlotAvailable(slot, duration, slot.getDoctor().getId())) {
             throw new ValidationException("The selected time slot conflicts with an existing one.");
         }
+        slot.setClinicLocation(clinicLocation);
         return slotRepository.save(slot);
     }
 
@@ -55,6 +56,9 @@ public class SlotServiceImpl implements SlotService {
     @Override
     public Slot updateSlot(Long id, Slot slotDetails) {
         Slot slot = slotRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Slot"));
+        Location clinicLocation = validateClinicLocation(slotDetails.getClinicLocation().getId(),
+                slot.getDoctor().getId());
+        slot.setClinicLocation(clinicLocation);
         slot.setStartTime(slotDetails.getStartTime());
         slot.setWeekDay(slotDetails.getWeekDay());
         return slotRepository.save(slot);
@@ -72,22 +76,40 @@ public class SlotServiceImpl implements SlotService {
         return slotRepository.findByDoctorId(doctorId);
     }
 
-    private boolean isSlotAvailable(LocalTime startTime, Duration duration, Long doctorId) {
+    private Location validateClinicLocation(Long locationId, Long doctorId) {
+        Location clinicLocation = locationRepository.findById(locationId).orElseThrow(
+                () -> new ResourceNotFoundException("Clinic location"));
+        List<Doctor> doctorList = clinicLocation.getClinic().getDoctors(); // [1,2]
+        Boolean isDoctorAssignedtoClinic = true;
+        for (Doctor doctor : doctorList) {
+            if (doctor.getId() == doctorId) {
+                isDoctorAssignedtoClinic = false;
+            }
+        }
+        if (isDoctorAssignedtoClinic) {
+            throw new ValidationException("Doctor not assigned in this clinic");
+        }
+        return clinicLocation;
+    }
+
+    private boolean isSlotAvailable(Slot slot, Duration duration, Long doctorId) {
+        LocalTime startTime = slot.getStartTime();
         LocalTime endTime = startTime.plus(duration);
 
         List<SlotProjection> existingSlots = slotRepository.findByDoctorId(doctorId);
 
-        for (SlotProjection slot : existingSlots) {
-            LocalTime existingStartTime = slot.getStartTime();
+        for (SlotProjection existSlot : existingSlots) {
+            LocalTime existingStartTime = existSlot.getStartTime();
             LocalTime existingEndTime = existingStartTime.plus(duration);
 
-            if (startTime.isBefore(existingEndTime) && endTime.isAfter(existingStartTime)) {
-                return false; 
+            if (startTime.isBefore(existingEndTime)
+                    && endTime.isAfter(existingStartTime)
+                    && slot.getWeekDay() == existSlot.getWeekDay()) {
+                return false;
             }
         }
 
-        return true; 
+        return true;
     }
-
 
 }
