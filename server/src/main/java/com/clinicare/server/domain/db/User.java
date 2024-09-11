@@ -42,7 +42,7 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @CreationTimestamp
@@ -56,6 +56,11 @@ public class User implements UserDetails {
     @Column(name = "phone")
     private String phone;
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -64,7 +69,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @Builder.Default
-    // @JsonIgnoreProperties("users")
     private List<Role> roles = new ArrayList<>();
 
     @Override
