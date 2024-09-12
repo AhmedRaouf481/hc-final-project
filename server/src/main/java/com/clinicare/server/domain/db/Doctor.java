@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
 @Table(name = "doctors")
+@SuperBuilder(toBuilder = true)
 public class Doctor extends User {
 
     @ManyToOne
@@ -33,13 +35,6 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy = "doctor")
     private Set<Slot> slots;
-
-//    @OneToMany(mappedBy = "doctor")
-//    private Set<Appointment> appointments;
-
-//    @OneToMany(mappedBy = "doctor", orphanRemoval = true, cascade = CascadeType.ALL)
-//    @JsonManagedReference(value = "doctor-doctorClinics")
-//    private List<DoctorClinic> doctorClinics;
 
     @ManyToMany
     @JoinTable(name = "doctor_clinics", joinColumns = @JoinColumn(name = "doctor_id"), inverseJoinColumns = @JoinColumn(name = "clinic_id"))

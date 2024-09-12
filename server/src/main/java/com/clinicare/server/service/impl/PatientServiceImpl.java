@@ -8,6 +8,9 @@ import com.clinicare.server.repository.PatientRepository;
 import com.clinicare.server.repository.RoleRepository;
 import com.clinicare.server.service.PatientService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +24,8 @@ import java.util.Optional;
 public class PatientServiceImpl implements PatientService {
 
 
-    
+    private final EntityManager entityManager;
+
     private final PatientRepository patientRepository;
 
     private final RoleRepository roleRepository;
@@ -81,6 +85,14 @@ public class PatientServiceImpl implements PatientService {
     public Patient findPatientByEmail(String email) {
         validatePatientEmail(email);
         return patientRepository.findByEmail(email);
+    }
+
+    @Transactional
+    @Override
+    public void saveDoctorAsPatient(Long userId) {
+      Query q = entityManager.createNativeQuery("INSERT INTO patients (id) VALUES (?)");
+        q.setParameter(1, userId);
+        q.executeUpdate();
     }
 
 
