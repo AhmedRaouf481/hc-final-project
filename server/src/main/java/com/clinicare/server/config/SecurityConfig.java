@@ -27,6 +27,7 @@ public class SecurityConfig {
     private final String[] WHITE_LIST_URL = {
             "/api/auth/**",
             "/error",
+            "api/specs/**"
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
