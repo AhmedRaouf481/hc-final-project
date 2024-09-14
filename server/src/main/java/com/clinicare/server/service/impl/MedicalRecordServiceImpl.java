@@ -1,6 +1,7 @@
 package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.MedicalRecord;
+import com.clinicare.server.domain.response.MedicalRecordResponse;
 import com.clinicare.server.repository.MedicalRecordRepository;
 import com.clinicare.server.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,16 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     @Override
     public MedicalRecord findMedicalRecordByDoctorId(Long doctorId) {
         return medicalRecordRepository.findByDoctorId(doctorId);
+    }
+    public MedicalRecordResponse mapToMedicalRecordResponse(Optional<MedicalRecord> medicalRecord) {
+        return new MedicalRecordResponse(
+                medicalRecord.get().getId(),
+                medicalRecord.get().getDiagnosis(),
+                medicalRecord.get().getTreatment(),
+                medicalRecord.get().getCreatedAt(),
+                medicalRecord.get().getDoctor().getName(),
+                medicalRecord.get().getPatient().getId(),
+                medicalRecord.get().getAppointment().getId()
+        );
     }
 }

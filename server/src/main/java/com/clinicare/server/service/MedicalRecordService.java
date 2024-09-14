@@ -1,6 +1,7 @@
 package com.clinicare.server.service;
 
 import com.clinicare.server.domain.db.MedicalRecord;
+import com.clinicare.server.domain.response.MedicalRecordResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,5 @@ public interface MedicalRecordService {
     MedicalRecord findMedicalRecordByPatientId(Long patientId);
 
     MedicalRecord findMedicalRecordByDoctorId(Long doctorId);
+    MedicalRecordResponse mapToMedicalRecordResponse(Optional<MedicalRecord> medicalRecord);
 }

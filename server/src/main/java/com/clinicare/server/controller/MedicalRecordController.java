@@ -1,6 +1,7 @@
 package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.MedicalRecord;
+import com.clinicare.server.domain.response.MedicalRecordResponse;
 import com.clinicare.server.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,12 @@ public class MedicalRecordController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMedicalRecordById(@PathVariable Long id) {
-        return ResponseEntity.ok(medicalRecordService.getMedicalRecordById(id));
+
+        Optional<MedicalRecord> medicalRecord=medicalRecordService.getMedicalRecordById(id);
+
+        MedicalRecordResponse medicalRecordResponse=medicalRecordService.mapToMedicalRecordResponse(medicalRecord);
+
+        return ResponseEntity.ok(medicalRecordResponse);
     }
 
     @GetMapping("/patient/{id}")
