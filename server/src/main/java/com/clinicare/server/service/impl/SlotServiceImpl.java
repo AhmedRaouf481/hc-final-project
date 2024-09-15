@@ -3,11 +3,13 @@ package com.clinicare.server.service.impl;
 import java.time.*;
 import java.util.*;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.clinicare.server.domain.db.Doctor;
 import com.clinicare.server.domain.db.Location;
 import com.clinicare.server.domain.db.Slot;
+import com.clinicare.server.domain.db.enums.DayOfWeek;
 import com.clinicare.server.domain.response.SlotProjection;
 import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.exception.ValidationException;
@@ -43,10 +45,10 @@ public class SlotServiceImpl implements SlotService {
         return slotRepository.save(slot);
     }
 
-    @Override
-    public List<Slot> getAllSlot() {
-        return slotRepository.findAll();
-    }
+    // public List<Slot> getAllSlot() {
+        //     return slotRepository.findAll();
+        // }
+    
 
     @Override
     public Slot getById(Long id) {
@@ -110,6 +112,33 @@ public class SlotServiceImpl implements SlotService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<Slot> getAllSlot(Long doctorId, Long locationId,Long clinicId, DayOfWeek weekDay) {
+        Specification<Slot> spec = Specification.where(null);
+
+        if (doctorId != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("doctor").get("id"), doctorId));
+        }
+
+        if (locationId != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("clinicLocation").get("id"), locationId));
+        }
+
+        if (clinicId != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("clinicLocation").get("clinic").get("id"), clinicId));
+        }
+
+        if (weekDay != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("weekDay"), weekDay));
+        }
+
+        return slotRepository.findAll(spec);
     }
 
 }
