@@ -1,8 +1,7 @@
 package com.clinicare.server.controller;
 
 import com.clinicare.server.service.DoctorClinicService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +11,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/doctor-clinic")
+@RequiredArgsConstructor
 public class DoctorClinicController {
 
-    @Autowired
-    private DoctorClinicService doctorClinicService;
+    private final DoctorClinicService doctorClinicService;
 
     @PostMapping("/{doc_id}/{clinic_id}")
     public ResponseEntity<?> addDoctorToClinic(@PathVariable Long doc_id, @PathVariable Long clinic_id) {

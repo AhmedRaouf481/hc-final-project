@@ -19,3 +19,11 @@ spring:
             dialect: org.hibernate.dialect.PostgreSQLDialect
     liquibase:
         change-log: classpath:db/master.xml
+
+logging:
+    level:
+        org:
+            springframework.security: DEBUG
+            hibernate:
+              sql: DEBUG
+              type.descriptor.sql.basicBinder: TRACE

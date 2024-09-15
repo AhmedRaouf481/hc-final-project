@@ -21,5 +21,7 @@ public interface PatientService {
 
     Patient findPatientByEmail(String email);
 
+    void saveDoctorAsPatient(Long id);
+
 
 }
