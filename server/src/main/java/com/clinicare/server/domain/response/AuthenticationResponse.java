@@ -1,4 +1,4 @@
-package com.clinicare.server.response;
+package com.clinicare.server.domain.response;
 
 import com.clinicare.server.domain.db.Role;
 import lombok.AllArgsConstructor;

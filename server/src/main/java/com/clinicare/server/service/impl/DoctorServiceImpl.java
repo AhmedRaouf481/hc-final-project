@@ -2,22 +2,22 @@ package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.Doctor;
 import com.clinicare.server.domain.db.Specialization;
+import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.repository.DoctorRepository;
 import com.clinicare.server.repository.SpecializationRepository;
 import com.clinicare.server.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
 
-    @Autowired
-    private DoctorRepository doctorRepository;
-    @Autowired
-    private SpecializationRepository specializationRepository;
+    private final DoctorRepository doctorRepository;
+    private final SpecializationRepository specializationRepository;
 
     @Override
     public List<Doctor> findAll() {
@@ -26,7 +26,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Optional<Doctor> findById(Long id) {
-        return this.doctorRepository.findById(id);
+        return Optional.ofNullable(this.doctorRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Doctor")
+        ));
     }
 
     @Override
@@ -39,7 +41,7 @@ public class DoctorServiceImpl implements DoctorService {
     public void delete(Long id) {
         Optional<Doctor> doctor = this.doctorRepository.findById(id);
         if (doctor.isEmpty())
-            throw new IllegalArgumentException("this user doesn't exist");
+            throw new ResourceNotFoundException("Doctor");
 
         doctorRepository.deleteById(id);
     }
@@ -47,7 +49,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Doctor> findDoctorsBySpecialization(Long id) {
         Optional<Specialization> specialization = Optional.ofNullable(specializationRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("not found id of specialization")
+                () -> new ResourceNotFoundException("Specialization")
         ));
         return this.doctorRepository.findDoctorsBySpecialization(specialization);
     }

@@ -1,8 +1,8 @@
 package com.clinicare.server.service;
 
-import com.clinicare.server.requests.LoginRequest;
-import com.clinicare.server.requests.RegisterRequest;
-import com.clinicare.server.response.AuthenticationResponse;
+import com.clinicare.server.domain.request.LoginRequest;
+import com.clinicare.server.domain.request.RegisterRequest;
+import com.clinicare.server.domain.response.AuthenticationResponse;
 import org.springframework.stereotype.Service;
 
 

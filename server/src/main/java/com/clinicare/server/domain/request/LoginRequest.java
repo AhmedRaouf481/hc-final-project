@@ -1,4 +1,4 @@
-package com.clinicare.server.requests;
+package com.clinicare.server.domain.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
