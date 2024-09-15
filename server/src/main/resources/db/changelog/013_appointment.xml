@@ -79,4 +79,11 @@
             <column  name="clinic_id"/>
         </dropColumn>
     </changeSet>
+    <changeSet id="013_6" author="araouf">
+        <addColumn tableName="appointments">
+            <column name="date" type="DATE">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
