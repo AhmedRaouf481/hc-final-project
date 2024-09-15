@@ -4,8 +4,6 @@ import com.clinicare.server.domain.db.Doctor;
 import com.clinicare.server.domain.db.Patient;
 import com.clinicare.server.domain.db.Role;
 import com.clinicare.server.domain.db.User;
-import com.clinicare.server.repository.DoctorRepository;
-import com.clinicare.server.repository.PatientRepository;
 import com.clinicare.server.repository.RoleRepository;
 import com.clinicare.server.repository.UserRepository;
 import com.clinicare.server.requests.LoginRequest;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +30,10 @@ import java.util.HashSet;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
-    private final DoctorRepository doctorRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final PatientRepository patientRepository;
     private final PatientService patientService;
 
     @Override
@@ -93,6 +88,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .roles(user.getRoles())
                 .token(jwtToken)
+                .id(user.getId())
                 .build();
     }
 
@@ -109,6 +105,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder()
                     .roles(user.getRoles())
+                    .id(user.getId())
                     .token(jwtToken).build();
         } catch (AuthenticationException e) {
             log.error("Authentication failed: {}", e.getMessage());
