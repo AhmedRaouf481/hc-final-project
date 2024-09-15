@@ -1,6 +1,8 @@
 package com.clinicare.server.service.impl;
 
 import java.util.List;
+import java.util.stream.*;
+import java.time.*;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.clinicare.server.domain.db.Appointment;
 import com.clinicare.server.domain.db.AppointmentStatus;
 import com.clinicare.server.domain.db.AppointmentType;
 import com.clinicare.server.domain.db.Slot;
+import com.clinicare.server.domain.request.RescheduleAppointmentRequest;
 import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.exception.ValidationException;
 import com.clinicare.server.repository.PatientRepository;
@@ -35,7 +38,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional
     public Appointment addAppointment(Appointment appointment) {
-        Slot slot = validateSlot(appointment.getSlot().getId());
+        Slot slot = validateSlot(appointment.getSlot().getId(),appointment.getDate());
 
         AppointmentType type = appointmentTypeRepository.findById(appointment.getType().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment Type not found"));
@@ -57,7 +60,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional
     public List<Appointment> getAllAppointment() {
-        return appointmentRepository.findAll();
+        List<Appointment> appts =  appointmentRepository.findAll();
+        return appts.stream()
+                .filter(appt -> appt.getStatus().getId() != 3)  // Filter out status with ID 3
+                .collect(Collectors.toList()); 
     }
 
     @Override
@@ -66,10 +72,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Appointment reschaduleAppointment(Long id, Long slotId) {
+    public Appointment reschaduleAppointment(Long id, RescheduleAppointmentRequest appointmentRequest) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment"));
-        Slot slot = validateSlot(slotId);
+        Slot slot = validateSlot(appointmentRequest.getSlotId(),appointment.getDate());
         appointment.setSlot(slot);
         return appointmentRepository.save(appointment);
 
@@ -95,21 +101,35 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepository.delete(appointment);
     }
 
-    private Slot validateSlot(Long slotId) {
+    // Check if the slot is available.
+    private Slot validateSlot(Long slotId, LocalDate date) {
         Slot slot = slotRepository.findById(slotId)
-                .orElseThrow(() -> new ResourceNotFoundException("Slot"));
+                .orElseThrow(() -> new ResourceNotFoundException("Slot ah" + slotId));
         List<Appointment> existingAppointments = appointmentRepository.findBySlotId(slot.getId());
 
         if (existingAppointments.isEmpty()) {
             return slot;
         }
         for (Appointment appointment : existingAppointments) {
-            if (appointment.getStatus().getId() != 3) {
+            if (appointment.getStatus().getId() != 3 && appointment.getDate().equals(date)) {
                 throw new ValidationException("Slot with ID " + slot.getId() + " is already booked");
             }
         }
 
         return slot;
 
+    }
+
+    @Override
+    public List<Appointment> getAppointmentBySlotId(Long slotId) {
+        List<Appointment> appts = appointmentRepository.findBySlotId(slotId);
+        return appts.stream()
+                .filter(appt -> appt.getStatus().getId() != 3)  // Filter out status with ID 3
+                .collect(Collectors.toList()); 
+    }
+
+    @Override
+    public List<AppointmentType> getAppointmentTypes() {
+        return appointmentTypeRepository.findAll();
     }
 }

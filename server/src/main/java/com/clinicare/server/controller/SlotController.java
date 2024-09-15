@@ -1,12 +1,15 @@
 package com.clinicare.server.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clinicare.server.domain.db.Slot;
+import com.clinicare.server.domain.db.enums.DayOfWeek;
 import com.clinicare.server.service.SlotService;
 
 import lombok.RequiredArgsConstructor;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,10 +34,14 @@ public class SlotController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getSlot() {
-        return ResponseEntity.ok(slotService.getAllSlot());
-    }
+    public ResponseEntity<?> getSlots(
+        @RequestParam(value = "doctorId", required = false) Long doctorId,
+        @RequestParam(value = "locationId", required = false) Long locationId,
+        @RequestParam(value = "clinicId", required = false) Long clinicId,
+        @RequestParam(value = "weekDay", required = false) DayOfWeek weekDay) {
     
+        return ResponseEntity.ok(slotService.getAllSlot(doctorId, locationId,clinicId, weekDay));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getSlotById(@PathVariable Long id) {

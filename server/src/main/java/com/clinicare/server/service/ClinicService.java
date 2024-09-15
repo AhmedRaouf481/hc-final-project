@@ -1,7 +1,7 @@
 package com.clinicare.server.service;
 
 import com.clinicare.server.domain.db.Clinic;
-import com.clinicare.server.domain.response.ClinicProjection;
+import com.clinicare.server.domain.response.ClinicWithLocationProjection;
 
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ClinicService {
     List<Clinic> finaAll();
 
-    List<ClinicProjection> findByDoctorId(Long doctorId);
+    List<ClinicWithLocationProjection> findByDoctorId(Long doctorId);
 
     Optional<Clinic> findById(Long id);
 
