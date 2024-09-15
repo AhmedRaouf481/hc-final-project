@@ -45,4 +45,9 @@
             <column name="name" type="varchar(255)"/>
        </addColumn>
     </changeSet>
+
+    <changeSet id="001-04" author="omaraalsaied">
+        <addUniqueConstraint tableName="users" columnNames="email" />
+        <addUniqueConstraint tableName="users" columnNames="username" />
+    </changeSet>
 </databaseChangeLog>
