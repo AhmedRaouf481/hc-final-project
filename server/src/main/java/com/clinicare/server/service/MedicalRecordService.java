@@ -1,9 +1,9 @@
 package com.clinicare.server.service;
 
 import com.clinicare.server.domain.db.MedicalRecord;
+import com.clinicare.server.dto.MedicalRecordDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MedicalRecordService {
     void deleteMedicalRecord(Long id);
@@ -12,9 +12,9 @@ public interface MedicalRecordService {
 
     MedicalRecord saveMedicalRecord(MedicalRecord medicalRecord);
 
-    Optional<MedicalRecord> getMedicalRecordById(Long id);
+    MedicalRecordDTO getMedicalRecordById(Long id);
 
-    List<MedicalRecord> getAllMedicalRecords();
+    List<MedicalRecordDTO> getAllMedicalRecords();
 
     MedicalRecord findMedicalRecordByPatientId(Long patientId);
 
