@@ -11,7 +11,7 @@ import com.clinicare.server.domain.response.AppointmentDto;
 import com.clinicare.server.domain.response.MyApptsResponse;
 
 public interface AppointmentService {
-    Appointment addAppointment(Appointment appointment);
+    AppointmentDto addAppointment(Appointment appointment);
 
     MyApptsResponse getMyAppointment(User user);
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.clinicare.server.domain.db.Appointment;
 import com.clinicare.server.domain.db.AppointmentStatus;
 import com.clinicare.server.domain.db.AppointmentType;
+import com.clinicare.server.domain.db.Patient;
 import com.clinicare.server.domain.db.Slot;
 import com.clinicare.server.domain.db.User;
 import com.clinicare.server.domain.request.RescheduleAppointmentRequest;
@@ -43,24 +44,25 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public Appointment addAppointment(Appointment appointment) {
+    public AppointmentDto addAppointment(Appointment appointment) {
         Slot slot = validateSlot(appointment.getSlot().getId(), appointment.getDate());
 
         AppointmentType type = appointmentTypeRepository.findById(appointment.getType().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Appointment Type not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment Type"));
 
-        if (!patientRepository.existsById(appointment.getPatient().getId())) {
-            throw new ResourceNotFoundException("Patient");
-        }
+       Patient patient = patientRepository.findById(appointment.getPatient().getId()).orElseThrow(
+        () -> new ResourceNotFoundException("Patient")
+       );
 
         // set status to scheduled
         AppointmentStatus status = appointmentStatusRepository.findById(1L)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment Status not found"));
 
         appointment.setSlot(slot);
+        appointment.setPatient(patient);
         appointment.setStatus(status);
         appointment.setType(type);
-        return appointmentRepository.save(appointment);
+        return dtoMapper.mapToAppointmentDto(appointmentRepository.save(appointment));
     }
 
     @Override
@@ -78,9 +80,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         // Check if the user has the 'patient' role and fetch patient appointments
         if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("PATIENT"))) {
-            patientAppointments = appointmentRepository.findAppointmentsByPatientId(user.getId()).stream()
-                    .map(dtoMapper::mapToAppointmentDto)
-                    .collect(Collectors.toList());
+            patientAppointments = appointmentRepository.findAppointmentsByPatientId(user.getId());
         }
 
         return MyApptsResponse.builder()
