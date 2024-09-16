@@ -1,13 +1,13 @@
 package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.MedicalRecord;
+import com.clinicare.server.dto.MedicalRecordDTO;
 import com.clinicare.server.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/m-record")
@@ -22,7 +22,15 @@ public class MedicalRecordController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMedicalRecordById(@PathVariable Long id) {
-        return ResponseEntity.ok(medicalRecordService.getMedicalRecordById(id));
+        try {
+            MedicalRecordDTO dto = medicalRecordService.getMedicalRecordById(id);
+            return ResponseEntity.ok(dto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred: " + e.getMessage());
+        }
     }
 
     @GetMapping("/patient/{id}")

@@ -36,6 +36,7 @@ public class Clinic {
 
     @ManyToMany(mappedBy = "doctorClinics")
     @JsonIgnoreProperties("clinics")
+    @JsonIgnore
     private List<Doctor> doctors;
 
 }
