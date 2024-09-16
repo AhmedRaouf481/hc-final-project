@@ -93,7 +93,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return AuthenticationResponse.builder()
                     .roles(user.getRoles())
                     .token(jwtToken)
-                    .id(user.getId())
                     .build();
         } catch (Exception e)
         {
@@ -115,7 +114,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder()
                     .roles(user.getRoles())
-                    .id(user.getId())
                     .token(jwtToken).build();
         } catch (AuthenticationException e) {
             log.error("Authentication failed: {}", e.getMessage());
