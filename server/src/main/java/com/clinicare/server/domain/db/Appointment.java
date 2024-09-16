@@ -35,7 +35,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "slot_id")
-    @JsonIgnoreProperties({"appointments", "doctor", "clinicLocation"}) 
+    @JsonIgnoreProperties({"appointments"}) 
     private Slot slot;
 
     @OneToOne(mappedBy = "appointment")

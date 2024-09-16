@@ -1,6 +1,9 @@
 package com.clinicare.server.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clinicare.server.domain.db.Appointment;
+import com.clinicare.server.domain.db.User;
 import com.clinicare.server.domain.request.ChangeStatusApptRequest;
 import com.clinicare.server.domain.request.RescheduleAppointmentRequest;
 import com.clinicare.server.service.AppointmentService;
@@ -30,9 +35,21 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.addAppointment(entity));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<?> getMyAppointments(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(appointmentService.getMyAppointment(user));
+    }
+
     @GetMapping()
-    public ResponseEntity<?> getAppointment() {
-        return ResponseEntity.ok(appointmentService.getAllAppointment());
+    public ResponseEntity<?> getAppointment(
+        @RequestParam(value = "doctorId", required = false) Long doctorId,
+        @RequestParam(value = "patientId", required = false) Long patientId,
+        @RequestParam(value = "statusId", required = false) Long statusId,
+        @RequestParam(value = "typeId", required = false) Long typeId,
+        @RequestParam(value = "date", required = false) LocalDate date
+ 
+    ) {
+        return ResponseEntity.ok(appointmentService.getAllAppointment(doctorId,patientId,statusId, typeId, date));
     }
 
     @GetMapping("slot/{slotId}")

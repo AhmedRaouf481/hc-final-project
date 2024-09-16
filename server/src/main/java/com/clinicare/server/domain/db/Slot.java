@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.clinicare.server.domain.db.enums.DayOfWeek;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +41,7 @@ public class Slot {
 
     @OneToMany(mappedBy = "slot", fetch = FetchType.LAZY)
     @Builder.Default
+    @JsonIgnore
     private Set<Appointment> appointments = new HashSet<Appointment>();
 
 }

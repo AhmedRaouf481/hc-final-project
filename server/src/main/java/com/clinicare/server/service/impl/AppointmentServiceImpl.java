@@ -1,5 +1,6 @@
 package com.clinicare.server.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.*;
 import java.time.*;
@@ -10,7 +11,11 @@ import com.clinicare.server.domain.db.Appointment;
 import com.clinicare.server.domain.db.AppointmentStatus;
 import com.clinicare.server.domain.db.AppointmentType;
 import com.clinicare.server.domain.db.Slot;
+import com.clinicare.server.domain.db.User;
 import com.clinicare.server.domain.request.RescheduleAppointmentRequest;
+import com.clinicare.server.domain.response.AppointmentDto;
+import com.clinicare.server.domain.response.DtoMapper;
+import com.clinicare.server.domain.response.MyApptsResponse;
 import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.exception.ValidationException;
 import com.clinicare.server.repository.PatientRepository;
@@ -34,11 +39,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final SlotRepository slotRepository;
     private final AppointmentStatusRepository appointmentStatusRepository;
     private final AppointmentTypeRepository appointmentTypeRepository;
+    private final DtoMapper dtoMapper;
 
     @Override
     @Transactional
     public Appointment addAppointment(Appointment appointment) {
-        Slot slot = validateSlot(appointment.getSlot().getId(),appointment.getDate());
+        Slot slot = validateSlot(appointment.getSlot().getId(), appointment.getDate());
 
         AppointmentType type = appointmentTypeRepository.findById(appointment.getType().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment Type not found"));
@@ -59,11 +65,53 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public List<Appointment> getAllAppointment() {
-        List<Appointment> appts =  appointmentRepository.findAll();
-        return appts.stream()
-                .filter(appt -> appt.getStatus().getId() != 3)  // Filter out status with ID 3
-                .collect(Collectors.toList()); 
+    public MyApptsResponse getMyAppointment(User user) {
+        List<AppointmentDto> doctorAppointments = new ArrayList<>();
+        List<AppointmentDto> patientAppointments = new ArrayList<>();
+
+        // Check if the user has the 'doctor' role and fetch doctor appointments
+        if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("DOCTOR"))) {
+            doctorAppointments = appointmentRepository.findAppointmentsByDoctorId(user.getId()).stream()
+                    .map(dtoMapper::mapToAppointmentDto)
+                    .collect(Collectors.toList());
+        }
+
+        // Check if the user has the 'patient' role and fetch patient appointments
+        if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("PATIENT"))) {
+            patientAppointments = appointmentRepository.findAppointmentsByPatientId(user.getId()).stream()
+                    .map(dtoMapper::mapToAppointmentDto)
+                    .collect(Collectors.toList());
+        }
+
+        return MyApptsResponse.builder()
+                .doctor(doctorAppointments)
+                .patient(patientAppointments)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public List<AppointmentDto> getAllAppointment(Long doctorId, Long patientId, Long statusId, Long typeId,
+            LocalDate date) {
+        List<Appointment> appointments = appointmentRepository.findAll();
+        return appointments.stream()
+                .filter(appt -> doctorId == null ||
+                        appt.getSlot().getDoctor().getId().equals(doctorId))
+
+                .filter(appt -> patientId == null ||
+                        appt.getPatient().getId().equals(patientId))
+
+                .filter(appt -> statusId == null ||
+                        appt.getStatus().getId().equals(statusId))
+
+                .filter(appt -> appt.getStatus().getId() != 3)
+
+                .filter(appt -> typeId == null || appt.getType().getId().equals(typeId))
+
+                .filter(appt -> date == null || appt.getDate().equals(date))
+
+                .map(dtoMapper::mapToAppointmentDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -75,7 +123,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment reschaduleAppointment(Long id, RescheduleAppointmentRequest appointmentRequest) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment"));
-        Slot slot = validateSlot(appointmentRequest.getSlotId(),appointment.getDate());
+        Slot slot = validateSlot(appointmentRequest.getSlotId(), appointment.getDate());
         appointment.setSlot(slot);
         return appointmentRepository.save(appointment);
 
@@ -121,15 +169,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentBySlotId(Long slotId) {
+    public List<AppointmentDto> getAppointmentBySlotId(Long slotId) {
         List<Appointment> appts = appointmentRepository.findBySlotId(slotId);
         return appts.stream()
-                .filter(appt -> appt.getStatus().getId() != 3)  // Filter out status with ID 3
-                .collect(Collectors.toList()); 
+                .filter(appt -> appt.getStatus().getId() != 3) 
+                .map(dtoMapper::mapToAppointmentDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<AppointmentType> getAppointmentTypes() {
         return appointmentTypeRepository.findAll();
     }
+
 }

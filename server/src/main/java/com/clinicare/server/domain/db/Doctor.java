@@ -2,6 +2,7 @@ package com.clinicare.server.domain.db;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -34,6 +35,7 @@ public class Doctor extends User {
     private Double salary;
 
     @OneToMany(mappedBy = "doctor")
+    @JsonIgnore
     private Set<Slot> slots;
 
     @ManyToMany
