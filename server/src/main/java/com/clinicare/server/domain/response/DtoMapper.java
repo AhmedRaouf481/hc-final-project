@@ -11,6 +11,8 @@ public class DtoMapper {
     public AppointmentDto mapToAppointmentDto(Appointment appointment) {
         AppointmentDto dto = new AppointmentDto();
         
+        dto.setId(appointment.getId());
+        
         // Mapping doctor information
         dto.setDoctorId(appointment.getSlot().getDoctor().getId());
         dto.setDoctorName(appointment.getSlot().getDoctor().getName());

@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentDto {
+    private long id;
     private Long doctorId;
     private String doctorName;
 

@@ -73,9 +73,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         // Check if the user has the 'doctor' role and fetch doctor appointments
         if (user.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("DOCTOR"))) {
-            doctorAppointments = appointmentRepository.findAppointmentsByDoctorId(user.getId()).stream()
-                    .map(dtoMapper::mapToAppointmentDto)
-                    .collect(Collectors.toList());
+            doctorAppointments = appointmentRepository.findAppointmentsByDoctorId(user.getId());
         }
 
         // Check if the user has the 'patient' role and fetch patient appointments
