@@ -1,8 +1,8 @@
 package com.clinicare.server.controller;
 
-import com.clinicare.server.requests.LoginRequest;
-import com.clinicare.server.requests.RegisterRequest;
-import com.clinicare.server.response.AuthenticationResponse;
+import com.clinicare.server.domain.request.LoginRequest;
+import com.clinicare.server.domain.request.RegisterRequest;
+import com.clinicare.server.domain.response.AuthenticationResponse;
 import com.clinicare.server.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,22 +1,23 @@
 package com.clinicare.server.service.impl;
 
 import com.clinicare.server.domain.db.Location;
+import com.clinicare.server.exception.ResourceNotFoundException;
 import com.clinicare.server.repository.LocationRepository;
 import com.clinicare.server.service.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
-    @Autowired
-    private LocationRepository locationRepository;
+    private final LocationRepository locationRepository;
 
     @Override
     public Optional<Location> findById(Long id) {
-        return Optional.ofNullable(locationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no address was found with this id")));
+        return Optional.ofNullable(locationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Address")));
     }
 
     @Override

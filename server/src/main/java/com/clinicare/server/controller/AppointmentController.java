@@ -22,19 +22,28 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/api/appointment")
 @RequiredArgsConstructor
 public class AppointmentController {
-  private final AppointmentService appointmentService;
+    private final AppointmentService appointmentService;
 
     @PostMapping
     public ResponseEntity<?> addAppointment(@RequestBody Appointment entity) {
-        appointmentService.addAppointment(entity);
-        return ResponseEntity.ok("Appointment added successfully");
+
+        return ResponseEntity.ok(appointmentService.addAppointment(entity));
     }
 
     @GetMapping()
     public ResponseEntity<?> getAppointment() {
         return ResponseEntity.ok(appointmentService.getAllAppointment());
     }
-    
+
+    @GetMapping("slot/{slotId}")
+    public ResponseEntity<?> getAppointmentBySlotId(@PathVariable Long slotId) {
+        return ResponseEntity.ok(appointmentService.getAppointmentBySlotId(slotId));
+    }
+
+    @GetMapping("types")
+    public ResponseEntity<?> getAppointmentTypes() {
+        return ResponseEntity.ok(appointmentService.getAppointmentTypes());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAppointmentById(@PathVariable Long id) {
@@ -42,20 +51,21 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> rescheduleAppintment(@PathVariable Long id,@Valid @RequestBody RescheduleAppointmentRequest appointment) {
-        return ResponseEntity.ok(appointmentService.reschaduleAppointment(id,appointment.getSlotId()));
+    public ResponseEntity<?> rescheduleAppintment(@PathVariable Long id,
+            @Valid @RequestBody RescheduleAppointmentRequest appointment) {
+        return ResponseEntity.ok(appointmentService.reschaduleAppointment(id, appointment));
     }
 
     @PutMapping("status/{id}")
-    public ResponseEntity<?> changeApptStatus(@PathVariable Long id,@Valid @RequestBody ChangeStatusApptRequest appointment) {
-        return ResponseEntity.ok(appointmentService.changeStatus(id,appointment.getStatusId()));
+    public ResponseEntity<?> changeApptStatus(@PathVariable Long id,
+            @Valid @RequestBody ChangeStatusApptRequest appointment) {
+        return ResponseEntity.ok(appointmentService.changeStatus(id, appointment.getStatusId()));
     }
-    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
         appointmentService.deleteAppointment(id);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

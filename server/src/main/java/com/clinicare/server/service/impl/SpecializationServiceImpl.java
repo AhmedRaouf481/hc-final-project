@@ -3,17 +3,16 @@ package com.clinicare.server.service.impl;
 import com.clinicare.server.domain.db.Specialization;
 import com.clinicare.server.repository.SpecializationRepository;
 import com.clinicare.server.service.SpecializationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SpecializationServiceImpl implements SpecializationService {
 
-    @Autowired
-    private SpecializationRepository specRepo;
+    private final SpecializationRepository specRepo;
 
 
     @Override

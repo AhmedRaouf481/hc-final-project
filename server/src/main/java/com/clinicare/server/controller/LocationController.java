@@ -2,7 +2,7 @@ package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.Location;
 import com.clinicare.server.service.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/locations")
+@RequiredArgsConstructor
 public class LocationController {
-    @Autowired
-    private LocationService locationService;
+    private final LocationService locationService;
 
     @PostMapping
     public ResponseEntity<Location> save(@RequestBody Location location)

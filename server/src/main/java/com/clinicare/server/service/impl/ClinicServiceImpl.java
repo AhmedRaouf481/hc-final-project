@@ -10,22 +10,20 @@ import com.clinicare.server.repository.DoctorRepository;
 import com.clinicare.server.repository.LocationRepository;
 import com.clinicare.server.service.ClinicService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ClinicServiceImpl implements ClinicService {
-    @Autowired
-    private ClinicRepository clinicRepository;
+    private final ClinicRepository clinicRepository;
 
-    @Autowired
-    private LocationRepository locationRepository;
+    private final LocationRepository locationRepository;
 
-    @Autowired
-    private DoctorRepository doctorRepository;
+    private final DoctorRepository doctorRepository;
 
     @Override
     public List<Clinic> finaAll() {
@@ -34,7 +32,9 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Optional<Clinic> findById(Long id) {
-        return clinicRepository.findById(id);
+        return Optional.ofNullable(clinicRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Clinic")
+        ));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public void delete(Long id) {
         Clinic clinic = clinicRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("clinic id not found"));
+                () -> new ResourceNotFoundException("Clinic"));
         clinicRepository.delete(clinic);
     }
 

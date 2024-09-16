@@ -2,6 +2,7 @@ package com.clinicare.server.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import java.time.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,9 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(name = "date")
+    private LocalDate date;
+    
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
@@ -31,6 +35,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "slot_id")
+    @JsonIgnoreProperties({"appointments", "doctor", "clinicLocation"}) 
     private Slot slot;
 
     @OneToOne(mappedBy = "appointment")

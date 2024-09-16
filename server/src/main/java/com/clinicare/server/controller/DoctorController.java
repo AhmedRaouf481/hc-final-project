@@ -2,7 +2,7 @@ package com.clinicare.server.controller;
 
 import com.clinicare.server.domain.db.Doctor;
 import com.clinicare.server.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/doctors")
+@RequiredArgsConstructor
 public class DoctorController {
-    @Autowired
-    private DoctorService doctorService;
+    private final DoctorService doctorService;
 
     @GetMapping
     public ResponseEntity<List<Doctor>> getAll() {

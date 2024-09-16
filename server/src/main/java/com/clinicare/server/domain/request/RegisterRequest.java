@@ -1,4 +1,4 @@
-package com.clinicare.server.requests;
+package com.clinicare.server.domain.request;
 
 import com.clinicare.server.domain.db.Role;
 import com.clinicare.server.domain.db.Specialization;
@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
