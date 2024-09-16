@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -73,8 +74,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 }
 
             }
-//        else if()
-//        { TODO: Add the logic to create admins with role id = 1 }
+            // else if()
+            // { TODO: Add the logic to create admins with role id = 1 }
             else {
                 // patient registration
                 Patient patient = Patient.builder()
@@ -89,31 +90,34 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 log.info("Registered patient: {}", user.getEmail());
             }
 
-            var jwtToken = jwtService.generateToken(user);
+            HashMap<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("id", user.getId());
+            String jwtToken = jwtService.generateToken(extraClaims, user);
             return AuthenticationResponse.builder()
                     .roles(user.getRoles())
                     .token(jwtToken)
+                    .name(user.getName())
                     .build();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
     }
 
-
     @Override
-    public AuthenticationResponse login(LoginRequest request){
+    public AuthenticationResponse login(LoginRequest request) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
             User user = userRepository.findUserByEmail(request.getEmail())
                     .orElseThrow(() -> new ResourceNotFoundException("Invalid email"));
 
-            String jwtToken = jwtService.generateToken(user);
+            HashMap<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("id", user.getId());
+            String jwtToken = jwtService.generateToken(extraClaims, user);
             return AuthenticationResponse.builder()
                     .roles(user.getRoles())
+                    .name(user.getName())
                     .token(jwtToken).build();
         } catch (AuthenticationException e) {
             log.error("Authentication failed: {}", e.getMessage());
